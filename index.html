@@ -1,0 +1,939 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WHIRL · Ultra-Filtered Protein Shake</title>
+<meta name="description" content="WHIRL is an ultra-filtered protein shake. 25g of protein, 0g added sugar, and the taste of a real chocolate milkshake. Crack it cold and drink.">
+<meta name="theme-color" content="#0e0a08">
+<!-- DEPLOY STEP: set og:url and og:image to absolute live URLs -->
+<meta property="og:title" content="WHIRL · Ultra-Filtered Protein Shake">
+<meta property="og:description" content="25g protein. 0g added sugar. Tastes like a chocolate milkshake.">
+<meta property="og:image" content="assets/mobile-hero.webp">
+<meta property="og:url" content="">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230e0a08'/%3E%3Cpath d='M32 12c11 0 20 9 20 20s-9 20-20 20-16-7-16-15 6-13 13-13 11 5 11 10-4 8-8 8-6-3-6-6' fill='none' stroke='%23d2b278' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e0a08; --bg2:#16100c; --bg3:#1e1611;
+  --ink:#f1e6d8; --muted:#b9a693; --dim:#8c7a69;
+  --cocoa:#6e4a33; --milk:#b08562; --latte:#d9bfa0;
+  --gold:#d2b278; --gold-hi:#ecd3a0;
+  --line:rgba(241,230,216,.12); --line-strong:rgba(241,230,216,.38);
+  --ease:cubic-bezier(.22,1,.36,1); --ease-io:cubic-bezier(.65,0,.35,1);
+  --tshadow:0 1px 2px rgba(8,5,3,.95),0 3px 12px rgba(8,5,3,.78),0 10px 44px rgba(8,5,3,.8);
+  --display:'Big Shoulders Display',Impact,sans-serif;
+  --body:'Hanken Grotesk',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{overflow-x:hidden;overflow-x:clip;-webkit-text-size-adjust:100%}
+body{margin:0;overflow-x:hidden;overflow-x:clip;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;animation:pagein 1s var(--ease) both}
+@keyframes pagein{from{opacity:0}to{opacity:1}}
+img{max-width:100%;display:block}
+a{color:inherit}
+button,input{font:inherit;color:inherit}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.skip{position:fixed;left:16px;top:-60px;z-index:100;background:var(--gold);color:var(--bg);padding:10px 16px;border-radius:10px;font-weight:600;transition:top .3s var(--ease)}
+.skip:focus{top:16px}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
+
+/* ---------- environment layer ---------- */
+.env{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.env::before{content:"";position:absolute;inset:-30%;background:
+  radial-gradient(40% 35% at 20% 30%,rgba(110,74,51,.22),transparent 70%),
+  radial-gradient(35% 30% at 80% 70%,rgba(210,178,120,.08),transparent 70%),
+  radial-gradient(50% 40% at 60% 10%,rgba(176,133,98,.10),transparent 70%);
+  animation:drift 90s linear infinite;animation-delay:-20s}
+.env::after{content:"";position:absolute;inset:0;opacity:.07;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+@keyframes drift{0%{transform:rotate(0) scale(1)}50%{transform:rotate(180deg) scale(1.1)}100%{transform:rotate(360deg) scale(1)}}
+
+/* ---------- nav ---------- */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:18px clamp(16px,4vw,48px);transition:background .5s var(--ease),backdrop-filter .5s var(--ease),padding .5s var(--ease),border-color .5s var(--ease);border-bottom:1px solid transparent}
+.nav.scrolled{background:rgba(14,10,8,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding-top:12px;padding-bottom:12px;border-color:var(--line)}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--display);font-weight:900;font-size:28px;letter-spacing:.04em;line-height:1}
+.logo svg{width:26px;height:26px}
+.nav ul{display:flex;gap:30px;list-style:none;margin:0;padding:0}
+.nav ul a{text-decoration:none;font-size:15px;color:var(--muted);transition:color .3s var(--ease)}
+.nav ul a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:13px 24px;border-radius:999px;font-weight:600;font-size:15px;text-decoration:none;border:1px solid var(--line-strong);background:transparent;cursor:pointer;transition:background .35s var(--ease),color .35s var(--ease),border-color .35s var(--ease),transform .35s var(--ease);text-shadow:none;white-space:nowrap}
+.btn:hover{border-color:var(--ink);transform:translateY(-2px)}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:#1a120c}
+.btn.gold:hover{background:var(--gold-hi);border-color:var(--gold-hi)}
+.btn .arr{transition:transform .35s var(--ease)}
+.btn:hover .arr{transform:translateX(4px)}
+@media (max-width:860px){.nav ul{display:none}}
+@media (pointer:coarse){.btn{min-height:44px}}
+
+/* ---------- hero scrub ---------- */
+.hero{position:relative;height:650vh}
+.stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#000}
+.poster,.seq{position:absolute;inset:0;width:100%;height:100%}
+.poster{background-size:cover;background-position:center}
+.seq{opacity:0;transition:opacity .9s var(--ease);transform:translateZ(0)}
+.stage.ready .seq{opacity:1}
+.scrim{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,rgba(0,0,0,.5),rgba(0,0,0,0) 16%,rgba(0,0,0,0) 82%,rgba(14,10,8,.9))}
+.band{position:absolute;top:50%;transform:translateY(-50%);width:min(31vw,480px);text-shadow:var(--tshadow);opacity:0;visibility:hidden;--k:0}
+.band.l{left:clamp(24px,5.5vw,96px)}
+.band.r{right:clamp(24px,5.5vw,96px);text-align:right}
+.band::before{content:"";position:absolute;inset:-60% -55%;z-index:-1;pointer-events:none;opacity:calc(.3 + .7*var(--k,1));background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(10,7,5,.78) 0%,rgba(10,7,5,.5) 46%,rgba(10,7,5,0) 76%)}
+.kicker{font-family:var(--mono);font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.band .kicker{display:inline-block;margin-bottom:18px;opacity:var(--ks0,1)}
+.band h1,.band h2{font-family:var(--display);font-weight:900;text-transform:uppercase;line-height:.92;letter-spacing:.005em;margin:0;font-size:clamp(46px,5.6vw,104px)}
+.band p{margin:22px 0 0;font-size:clamp(16px,1.2vw,19px);color:#e3d5c4;max-width:34ch;--ks:clamp(0,(var(--k) - .55)*3,1);opacity:var(--ks);transform:translateY(calc((1 - var(--ks))*14px))}
+.band.r p{margin-left:auto}
+.band .ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px;--kb:clamp(0,(var(--k) - .75)*4,1);opacity:var(--kb);transform:translateY(calc((1 - var(--kb))*14px))}
+.w{display:inline-block;white-space:nowrap}
+.c{display:inline-block}
+.em{color:var(--gold)}
+/* entrance: approach from depth (band 1) */
+.fx-depth .c{--kc:clamp(0,(var(--k) - var(--th,0))*2.4,1);opacity:var(--kc);transform:translate(calc((1 - var(--kc))*var(--jx,0px)),calc((1 - var(--kc))*var(--jy,0px))) scale(calc(.6 + .4*var(--kc)))}
+/* entrance: weave, orbiting particles (band 2) */
+.fx-weave .c{--kc:clamp(0,(var(--k) - var(--th,0))*2.8,1);opacity:var(--kc);transform:translateY(calc((1 - var(--kc))*var(--jy,0px))) rotate(calc((1 - var(--kc))*var(--jr,0deg)))}
+/* entrance: word punch with overshoot, the splash (band 3) */
+.fx-punch .w{--kc:clamp(0,(var(--k) - var(--th,0))*3,1);--ks2:clamp(0,(var(--k) - var(--th,0) - var(--sd,.1))*var(--ss,3.2),1);opacity:var(--kc);transform:scale(calc(.55 + (.45 + var(--ov,.14))*var(--kc) - var(--ov,.14)*var(--ks2)))}
+.fx-punch .w.em{--ov:.26;--sd:.16;--ss:2.6}
+/* entrance: drift down, falling ice (band 4) */
+.fx-drift .w{--kc:clamp(0,(var(--k) - var(--th,0))*2.8,1);opacity:var(--kc);transform:translateY(calc((1 - var(--kc))*-34px))}
+/* entrance: rise into staged settle (band 5) */
+.fx-rise .w{--kc:clamp(0,(var(--k) - var(--th,0))*2.6,1);opacity:var(--kc);transform:translateY(calc((1 - var(--kc))*40px))}
+
+/* HUD */
+.hud{position:absolute;right:clamp(16px,2.4vw,36px);bottom:clamp(20px,4vh,40px);display:flex;align-items:center;gap:14px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--latte);padding:10px 14px;background:rgba(14,10,8,.55);border:1px solid var(--line);border-radius:12px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.hud .rail{width:4px;height:44px;border-radius:4px;background:rgba(241,230,216,.12);overflow:hidden;position:relative}
+.hud .rail i{position:absolute;inset:0;background:linear-gradient(to top,var(--cocoa),var(--gold));transform-origin:bottom;transform:scaleY(0)}
+.hud b{font-weight:500;color:var(--ink);font-size:20px;letter-spacing:.04em;display:block;line-height:1.1}
+.hud small{display:block;color:var(--dim);font-size:10.5px}
+.cue{position:absolute;left:50%;bottom:clamp(20px,4vh,40px);transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--latte);transition:opacity .6s var(--ease)}
+.cue .ring{width:40px;height:40px;color:var(--gold)}
+.cue .ring circle{transition:stroke-dashoffset .3s linear}
+.cue .ring .track{stroke:rgba(241,230,216,.15)}
+.cue .mouse{width:22px;height:34px;border:1.5px solid var(--latte);border-radius:12px;position:relative;display:none}
+.cue .mouse::after{content:"";position:absolute;left:50%;top:7px;width:3px;height:7px;margin-left:-1.5px;border-radius:2px;background:var(--gold);animation:wheel 2.2s var(--ease) infinite}
+.stage.loaded .cue .ring{display:none}
+.stage.loaded .cue .mouse{display:block}
+.stage.scrolled .cue{opacity:0}
+@keyframes wheel{0%{transform:translateY(0);opacity:0}30%{opacity:1}100%{transform:translateY(12px);opacity:0}}
+@media (max-height:560px){.hud,.cue{display:none}}
+
+/* static hero (phones, portrait tablets, reduced motion) */
+.hero-static{display:none;position:relative;padding:0 20px 56px;overflow:hidden;background:#000}
+.hero-static img{position:relative;width:calc(100% + 40px);max-width:none;margin:0 -20px;height:min(70svh,640px);object-fit:cover;object-position:50% 50%;-webkit-mask-image:linear-gradient(to bottom,transparent,#000 14%,#000 72%,transparent);mask-image:linear-gradient(to bottom,transparent,#000 14%,#000 72%,transparent)}
+.hero-static .copy{position:relative;z-index:1;margin-top:-56px;text-shadow:var(--tshadow)}
+.hero-static h1{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(52px,14vw,96px);line-height:.9;margin:14px 0 0}
+.hero-static p{color:#e3d5c4;margin:16px 0 24px;max-width:36ch}
+.hero-static .ctas{display:flex;gap:12px;flex-wrap:wrap}
+@media (max-width:720px),(orientation:portrait) and (max-width:1024px),(orientation:portrait) and (pointer:coarse),(orientation:landscape) and (pointer:coarse) and (max-height:560px),(prefers-reduced-motion:reduce){
+  .hero{display:none}
+  .hero-static{display:grid}
+}
+
+/* ---------- ticker ---------- */
+.ticker{border-block:1px solid var(--line);overflow:hidden;padding:20px 0;background:var(--bg2)}
+.ticker .track{display:flex;width:max-content;animation:tick 48s linear infinite;animation-delay:-12s}
+.ticker span{font-family:var(--display);font-weight:700;font-size:clamp(22px,2.4vw,34px);text-transform:uppercase;letter-spacing:.06em;padding:0 28px;color:var(--latte);display:flex;align-items:center;gap:56px;white-space:nowrap}
+.ticker span::after{content:"";width:9px;height:9px;border-radius:50%;background:var(--gold);display:inline-block}
+.ticker:not(.live) .track{animation-play-state:paused}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* ---------- shared section ---------- */
+section{position:relative}
+.wrap{width:min(1240px,100% - 40px);margin-inline:auto}
+.pad{padding-block:clamp(90px,13vw,170px)}
+.h2{font-family:var(--display);font-weight:900;text-transform:uppercase;line-height:.92;font-size:clamp(46px,6.4vw,104px);margin:16px 0 0;letter-spacing:.005em}
+.lede{color:var(--muted);font-size:clamp(17px,1.3vw,20px);max-width:46ch;margin:22px 0 0}
+[data-reveal]>*{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:calc(var(--i,0)*110ms)}
+[data-reveal].in>*{opacity:1;transform:none}
+[data-reveal].in.done>*{transition-delay:0s}
+
+/* ---------- fill signature ---------- */
+.fill{padding-block:clamp(90px,12vw,160px) clamp(60px,8vw,110px);text-align:center}
+.fill .kicker{display:block}
+.fillword{width:min(1180px,100% - 32px);margin:34px auto 0;display:block;overflow:visible}
+.fillword .outline{fill:none;stroke:var(--gold);stroke-width:2.2;opacity:.85}
+.wave{animation:wave 7s linear infinite}
+.wave.back{animation-duration:11s;animation-direction:reverse;opacity:.55}
+.fill:not(.live) .wave{animation-play-state:paused}
+@keyframes wave{to{transform:translateX(-500px)}}
+.fill .meter{font-family:var(--mono);font-size:12.5px;letter-spacing:.16em;color:var(--muted);margin-top:18px}
+.fill .meter b{color:var(--gold);font-weight:500}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:clamp(56px,7vw,96px);border-top:1px solid var(--line)}
+.stat{padding:34px 20px 8px;text-align:left;border-right:1px solid var(--line)}
+.stat:last-child{border-right:0}
+.stat .num{font-family:var(--display);font-weight:900;font-size:clamp(64px,8vw,128px);line-height:.9;display:flex;align-items:baseline;gap:4px}
+.stat .num small{font-size:.38em;color:var(--gold)}
+.stat p{color:var(--muted);margin:12px 0 0;max-width:28ch}
+@media (max-width:760px){.stats{grid-template-columns:1fr}.stat{border-right:0;border-bottom:1px solid var(--line);padding:28px 4px}}
+
+/* ---------- compare ---------- */
+.compare{background:linear-gradient(to bottom,transparent,var(--bg2) 20%,var(--bg2) 80%,transparent)}
+.compare .grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(36px,6vw,96px);align-items:start}
+.tbl{width:100%;border-collapse:collapse;font-size:16px}
+.tbl th,.tbl td{padding:20px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:baseline}
+.tbl thead th{font-family:var(--mono);font-weight:500;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.tbl thead th.us{color:var(--gold)}
+.tbl tbody th{font-weight:500;color:var(--muted)}
+.tbl td.us{font-family:var(--display);font-weight:700;font-size:26px;color:var(--ink);letter-spacing:.02em;position:relative}
+.tbl td{color:var(--dim)}
+.tbl .usbg{background:rgba(210,178,120,.06)}
+@media (max-width:900px){.compare .grid{grid-template-columns:1fr}}
+@media (max-width:560px){.tbl th,.tbl td{padding:16px 8px;font-size:14px}.tbl td.us{font-size:21px}}
+
+/* ---------- ritual ---------- */
+.ritual .head{display:flex;justify-content:space-between;align-items:end;gap:30px;flex-wrap:wrap}
+.steps{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2.4vw,34px);margin-top:clamp(50px,6vw,84px)}
+.step:nth-of-type(2){margin-top:70px}
+.step:nth-of-type(3){margin-top:140px}
+.step figure{margin:0;border-radius:22px;overflow:hidden;aspect-ratio:3/4;position:relative;background:var(--bg3)}
+.step img{width:100%;height:100%;object-fit:cover;transform:scale(1.12);transition:transform 1.6s var(--ease)}
+.step.in img,[data-reveal].in .step img{transform:scale(1)}
+.step figure::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(14,10,8,.85),rgba(14,10,8,0) 55%)}
+.step .n{position:absolute;left:20px;bottom:18px;z-index:1;font-family:var(--mono);font-size:12px;letter-spacing:.18em;color:var(--gold)}
+.step h3{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(34px,3.2vw,48px);line-height:.95;margin:22px 0 0}
+.step p{color:var(--muted);margin:10px 0 0;max-width:32ch}
+.swirl{position:absolute;inset:-40px -20px auto;width:calc(100% + 40px);height:calc(100% + 80px);pointer-events:none;z-index:-1}
+.swirl path{fill:none;stroke:var(--gold);stroke-width:1.6;opacity:.5;stroke-linecap:round}
+@media (max-width:860px){.steps{grid-template-columns:1fr}.step:nth-of-type(n){margin-top:0}.step figure{aspect-ratio:4/3}.swirl{display:none}}
+
+/* ---------- shake interaction ---------- */
+.shake .grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(36px,6vw,90px);align-items:center}
+.bottlebox{position:relative;border-radius:28px;overflow:hidden;aspect-ratio:4/5;background:radial-gradient(70% 60% at 50% 45%,#2a1d15,var(--bg) 75%);border:1px solid var(--line)}
+.bottlebox img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform}
+.bottlebox::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 80% 70% at 50% 50%,transparent 50%,rgba(14,10,8,.7))}
+.bottlebox .glow{position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(circle at 50% 55%,rgba(210,178,120,.45),transparent 60%);opacity:0;mix-blend-mode:screen}
+.holdwrap{display:flex;align-items:center;gap:22px;margin-top:34px;flex-wrap:wrap}
+.hold{position:relative;width:118px;height:118px;border-radius:50%;border:0;background:var(--bg3);cursor:pointer;display:grid;place-items:center;touch-action:none;-webkit-user-select:none;user-select:none;transition:transform .4s var(--ease),background .4s var(--ease)}
+.hold:hover{transform:scale(1.04)}
+.hold.on{transform:scale(.96)}
+.hold svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.hold circle{fill:none;stroke-width:4}
+.hold .t{stroke:var(--line)}
+.hold .p{stroke:var(--gold);stroke-dasharray:339.3;stroke-dashoffset:339.3;stroke-linecap:round}
+.hold span{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;line-height:1.35;text-align:center;color:var(--latte)}
+.holdnote{color:var(--muted);max-width:26ch;font-size:15px}
+.panel{margin-top:38px;border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.panel .row{display:flex;justify-content:space-between;align-items:baseline;padding:15px 20px;border-bottom:1px solid var(--line);color:var(--dim);transition:color .7s var(--ease),background .7s var(--ease)}
+.panel .row:last-child{border-bottom:0}
+.panel .row b{font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:.03em;color:var(--dim);transition:color .7s var(--ease)}
+.panel .row.lit{color:var(--ink);background:rgba(210,178,120,.05)}
+.panel .row.lit b{color:var(--gold)}
+@media (max-width:860px){.shake .grid{grid-template-columns:1fr}.bottlebox{aspect-ratio:1/1;max-height:70vh}}
+
+/* ---------- faq ---------- */
+.faq .grid{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:clamp(36px,6vw,96px)}
+.faq .side{position:sticky;top:120px;align-self:start}
+details{border-bottom:1px solid var(--line)}
+details:first-of-type{border-top:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:26px 4px;font-size:clamp(18px,1.5vw,22px);font-weight:500}
+summary::-webkit-details-marker{display:none}
+summary .pm{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid var(--line-strong);position:relative;transition:transform .5s var(--ease),border-color .5s var(--ease)}
+summary .pm::before,summary .pm::after{content:"";position:absolute;left:50%;top:50%;width:11px;height:1.5px;background:var(--ink);transform:translate(-50%,-50%)}
+summary .pm::after{transform:translate(-50%,-50%) rotate(90deg);transition:transform .5s var(--ease)}
+details[open] summary .pm{border-color:var(--gold);transform:rotate(180deg)}
+details[open] summary .pm::after{transform:translate(-50%,-50%) rotate(0)}
+details .ans{color:var(--muted);padding:0 4px 26px;max-width:58ch;margin:0}
+@media (max-width:860px){.faq .grid{grid-template-columns:1fr}.faq .side{position:static}}
+
+/* ---------- order ---------- */
+.order{overflow:hidden}
+.order .card{position:relative;border-radius:32px;border:1px solid var(--line);background:linear-gradient(140deg,#21170f,#120d0a 60%);overflow:hidden;display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr)}
+.order .card .img{position:relative;min-height:420px}
+.order .card .img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.order .card .img::after{content:"";position:absolute;inset:0;background:linear-gradient(to right,rgba(18,13,10,0) 55%,#140e0b)}
+.order .form{padding:clamp(28px,4vw,56px)}
+.order .h2{font-size:clamp(42px,4.6vw,76px)}
+.packs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:28px;border:0;padding:0}
+.packs legend{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:12px;padding:0}
+.pack{position:relative}
+.pack input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.pack label{display:block;padding:16px 14px;border-radius:16px;border:1px solid var(--line-strong);cursor:pointer;transition:border-color .35s var(--ease),background .35s var(--ease)}
+.pack label b{display:block;font-family:var(--display);font-weight:900;font-size:30px;line-height:1}
+.pack label span{font-size:13.5px;color:var(--muted)}
+.pack input:checked+label{border-color:var(--gold);background:rgba(210,178,120,.08)}
+.pack input:focus-visible+label{outline:2px solid var(--gold);outline-offset:3px}
+.sub{display:flex;align-items:center;gap:14px;margin-top:20px;cursor:pointer;font-size:15px;color:var(--muted)}
+.sub input{appearance:none;-webkit-appearance:none;width:46px;height:26px;border-radius:99px;background:var(--bg3);border:1px solid var(--line-strong);position:relative;cursor:pointer;flex:none;transition:background .35s var(--ease),border-color .35s var(--ease);margin:0}
+.sub input::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--latte);transition:transform .35s var(--ease)}
+.sub input:checked{background:var(--gold);border-color:var(--gold)}
+.sub input:checked::after{transform:translateX(20px);background:#1a120c}
+.total{display:flex;justify-content:space-between;align-items:baseline;margin-top:26px;padding-top:22px;border-top:1px solid var(--line)}
+.total .amt{font-family:var(--display);font-weight:900;font-size:46px;line-height:1}
+.total .per{color:var(--dim);font-size:14px}
+.emailrow{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
+.emailrow input{flex:1 1 220px;min-height:50px;padding:0 18px;border-radius:999px;border:1px solid var(--line-strong);background:rgba(14,10,8,.6);transition:border-color .3s var(--ease)}
+.emailrow input::placeholder{color:var(--dim)}
+.emailrow input:focus{border-color:var(--gold);outline:none}
+.fine{font-size:13px;color:var(--dim);margin:14px 0 0}
+.success{display:none;margin-top:24px;padding:18px 20px;border-radius:16px;border:1px solid var(--gold);background:rgba(210,178,120,.07)}
+.success b{font-family:var(--display);font-size:26px;text-transform:uppercase;display:block}
+.order.sent .success{display:block;animation:pop .7s var(--ease)}
+.order.sent .emailrow{display:none}
+@keyframes pop{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (max-width:900px){.order .card{grid-template-columns:1fr}.order .card .img{min-height:300px}.order .card .img::after{background:linear-gradient(to bottom,rgba(18,13,10,0) 55%,#140e0b)}}
+@media (max-width:420px){.packs{grid-template-columns:1fr}}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);padding:70px 0 40px;margin-top:clamp(60px,8vw,120px)}
+footer .top{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap}
+footer .big{font-family:var(--display);font-weight:900;font-size:clamp(90px,17vw,250px);line-height:.8;letter-spacing:.01em;color:transparent;-webkit-text-stroke:1.5px rgba(210,178,120,.5);margin-top:60px;user-select:none}
+footer ul{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+footer ul a{text-decoration:none;color:var(--muted);transition:color .3s var(--ease)}
+footer ul a:hover{color:var(--ink)}
+footer .cols{display:flex;gap:70px;flex-wrap:wrap}
+footer h4{font-family:var(--mono);font-weight:500;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin:0 0 16px}
+footer .legal{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:30px;font-size:13px;color:var(--dim)}
+
+body.paused *,body.paused *::before,body.paused *::after{animation-play-state:paused!important}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;transition-delay:0s!important}
+  [data-reveal]>*{opacity:1;transform:none}
+  .step img{transform:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="env" aria-hidden="true"></div>
+
+<nav class="nav" id="nav" aria-label="Main">
+  <a class="logo" href="#top" aria-label="WHIRL home">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 12c11 0 20 9 20 20s-9 20-20 20-16-7-16-15 6-13 13-13 11 5 11 10-4 8-8 8-6-3-6-6" fill="none" stroke="#d2b278" stroke-width="5" stroke-linecap="round"/></svg>
+    WHIRL
+  </a>
+  <ul>
+    <li><a href="#numbers">The numbers</a></li>
+    <li><a href="#compare">Compare</a></li>
+    <li><a href="#shake">Shake it</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a class="btn gold" href="#order">Order now <span class="arr" aria-hidden="true">→</span></a>
+</nav>
+
+<!-- Scroll hero (laptops and desktops): HD frame sequence scrubbed by scroll -->
+<section class="hero" id="top" aria-label="Introduction">
+  <div class="stage" id="stage">
+    <div class="poster" id="poster" aria-hidden="true"></div>
+    <canvas class="seq" id="seq" aria-hidden="true" tabindex="-1"></canvas>
+    <div class="scrim" aria-hidden="true"></div>
+
+    <div class="band l fx-depth" data-a="0" data-b="0.14">
+      <span class="kicker">Ultra-filtered protein shake</span>
+      <h1 data-split="c" data-fx="depth">Chocolate milk grew up.</h1>
+      <p>WHIRL Chocolate Swirl is a ready-to-drink protein shake. 25g of protein, 0g added sugar, and the taste of a real chocolate milkshake.</p>
+    </div>
+
+    <div class="band r fx-weave" data-a="0.17" data-b="0.33">
+      <span class="kicker">How it's made</span>
+      <h2 data-split="c" data-fx="weave">We filter the milk. Not the flavor.</h2>
+      <p>Real milk runs through ultra-fine filters. The protein comes through, so we never need to add sugar to make it taste good.</p>
+    </div>
+
+    <div class="band l fx-punch" data-a="0.36" data-b="0.58">
+      <span class="kicker">Per bottle</span>
+      <h2 data-split="w" data-fx="punch" data-em="0,2">25 grams. Zero chalk.</h2>
+      <p>Thick and smooth from the first sip to the last, with BCAAs built in. No grit at the bottom of the bottle.</p>
+    </div>
+
+    <div class="band r fx-drift" data-a="0.61" data-b="0.8">
+      <span class="kicker">Ready when you are</span>
+      <h2 data-split="w" data-fx="drift">No shaker. No scoop. No clumps.</h2>
+      <p>Keep a few in the fridge. Crack one open on the walk home from the gym.</p>
+    </div>
+
+    <div class="band l fx-rise" data-a="0.84" data-b="1">
+      <span class="kicker">Chocolate Swirl · 6, 12 and 24 packs</span>
+      <h2 data-split="w" data-fx="rise" data-em="3">Cold from the fridge. Gone in a minute.</h2>
+      <p>Free delivery on orders over $35. Pause or cancel your subscription any time.</p>
+      <div class="ctas">
+        <a class="btn gold" href="#order">Order a pack <span class="arr" aria-hidden="true">→</span></a>
+        <a class="btn" href="#numbers">See the numbers</a>
+      </div>
+    </div>
+
+    <div class="cue" aria-hidden="true">
+      <svg class="ring" viewBox="0 0 48 48"><circle class="track" cx="24" cy="24" r="20" fill="none" stroke-width="3"/><circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="126" stroke-linecap="round" transform="rotate(-90 24 24)" style="stroke-dashoffset:var(--ld,126)"/></svg>
+      <span class="mouse"></span>
+      <span id="cueTxt">Loading</span>
+    </div>
+
+    <div class="hud" aria-hidden="true">
+      <div class="rail"><i id="rail"></i></div>
+      <div><small>Protein loaded</small><b id="hudNum">00G</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- Static hero (phones, portrait tablets, reduced motion) -->
+<section class="hero-static" aria-label="Introduction">
+  <img src="assets/mobile-hero-2x.webp" srcset="assets/mobile-hero.webp 1087w, assets/mobile-hero-2x.webp 2174w" sizes="100vw" alt="A bottle of WHIRL Chocolate Swirl protein shake in a splash of chocolate milk and ice" width="1087" height="1447" fetchpriority="high">
+  <div class="copy">
+    <span class="kicker">Ultra-filtered protein shake</span>
+    <h1>Chocolate milk grew up.</h1>
+    <p>25g of protein, 0g added sugar, and the taste of a real chocolate milkshake. No shaker, no scoop.</p>
+    <div class="ctas">
+      <a class="btn gold" href="#order">Order a pack <span class="arr" aria-hidden="true">→</span></a>
+      <a class="btn" href="#numbers">See the numbers</a>
+    </div>
+  </div>
+</section>
+
+<main id="main" tabindex="-1">
+
+  <div class="ticker" id="ticker" aria-hidden="true">
+    <div class="track">
+      <span>25g protein</span><span>0g added sugar</span><span>BCAAs</span><span>Chocolate Swirl</span><span>Ready to drink</span><span>Real milk</span>
+      <span>25g protein</span><span>0g added sugar</span><span>BCAAs</span><span>Chocolate Swirl</span><span>Ready to drink</span><span>Real milk</span>
+    </div>
+  </div>
+
+  <!-- Signature: the wordmark fills as you scroll -->
+  <section class="fill" id="numbers" aria-labelledby="numH">
+    <div class="wrap">
+      <span class="kicker">The numbers</span>
+      <h2 class="h2" id="numH">Filled to the top.</h2>
+      <svg class="fillword" id="fillword" viewBox="0 0 1000 250" role="img" aria-label="The WHIRL wordmark filling with chocolate milk">
+        <defs>
+          <clipPath id="wordclip"><text x="500" y="222" text-anchor="middle" textLength="960" lengthAdjust="spacingAndGlyphs" font-family="Big Shoulders Display, Impact, sans-serif" font-weight="900" font-size="280">WHIRL</text></clipPath>
+          <linearGradient id="choc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c8996f"/><stop offset=".45" stop-color="#8d5f3f"/><stop offset="1" stop-color="#4a2f1f"/></linearGradient>
+        </defs>
+        <g clip-path="url(#wordclip)">
+          <rect width="1000" height="250" fill="#1a130e"/>
+          <g id="fillLevel" transform="translate(0 260)">
+            <path class="wave back" fill="#d9bfa0" d="M0 14 Q62.5 0 125 14 T250 14 T375 14 T500 14 T625 14 T750 14 T875 14 T1000 14 T1125 14 T1250 14 T1375 14 T1500 14 V400 H0Z"/>
+            <path class="wave" fill="url(#choc)" d="M0 22 Q62.5 6 125 22 T250 22 T375 22 T500 22 T625 22 T750 22 T875 22 T1000 22 T1125 22 T1250 22 T1375 22 T1500 22 V400 H0Z"/>
+          </g>
+        </g>
+        <text class="outline" x="500" y="222" text-anchor="middle" textLength="960" lengthAdjust="spacingAndGlyphs" font-family="Big Shoulders Display, Impact, sans-serif" font-weight="900" font-size="280">WHIRL</text>
+      </svg>
+      <div class="meter" aria-hidden="true">FILL LEVEL <b id="fillPct">0%</b></div>
+
+      <div class="stats" data-reveal>
+        <div class="stat" style="--i:0"><div class="num"><span data-count="25">0</span><small>g</small></div><p>Protein in every bottle. About what you'd get from four eggs.</p></div>
+        <div class="stat" style="--i:1"><div class="num"><span data-count="0">0</span><small>g</small></div><p>Added sugar. Filtering keeps the taste, so there's nothing to cover up.</p></div>
+        <div class="stat" style="--i:2"><div class="num"><span data-count="3">0</span><small>BCAAs</small></div><p>Leucine, isoleucine and valine. The amino acids your muscles use to recover.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Compare -->
+  <section class="compare pad" id="compare" aria-labelledby="cmpH">
+    <div class="wrap grid">
+      <div data-reveal>
+        <span class="kicker" style="--i:0">Compare</span>
+        <h2 class="h2" id="cmpH" style="--i:1">Skip the scoop.</h2>
+        <p class="lede" style="--i:2">Powder needs a shaker, water, and a sink. A café milkshake tastes great and costs you a day's sugar. WHIRL gives you the taste of one and the protein of the other.</p>
+      </div>
+      <div data-reveal>
+        <table class="tbl" style="--i:0">
+          <caption class="sr-only">WHIRL compared with a typical whey powder scoop and a typical café chocolate milkshake</caption>
+          <thead><tr><th scope="col"><span class="sr-only">Per serving</span></th><th scope="col" class="us usbg">WHIRL</th><th scope="col">Whey scoop</th><th scope="col">Café shake</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Protein</th><td class="us usbg">25g</td><td>24g</td><td>12g</td></tr>
+            <tr><th scope="row">Added sugar</th><td class="us usbg">0g</td><td>1g</td><td>60g</td></tr>
+            <tr><th scope="row">BCAAs</th><td class="us usbg">Built in</td><td>Some</td><td>None</td></tr>
+            <tr><th scope="row">Prep</th><td class="us usbg">Twist cap</td><td>Shaker + water</td><td>A queue</td></tr>
+            <tr><th scope="row">Texture</th><td class="us usbg">Smooth</td><td>Gritty if rushed</td><td>Thick</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ritual -->
+  <section class="ritual pad" aria-labelledby="ritH">
+    <div class="wrap">
+      <div class="head" data-reveal>
+        <div>
+          <span class="kicker" style="--i:0">The ritual</span>
+          <h2 class="h2" id="ritH" style="--i:1">Three steps. All easy.</h2>
+        </div>
+        <p class="lede" style="--i:2">No measuring, no mixing, no washing up. Just a cold bottle and a minute of your time.</p>
+      </div>
+      <div class="steps" id="steps">
+        <svg class="swirl" viewBox="0 0 1200 600" preserveAspectRatio="none" aria-hidden="true"><path id="swirlPath" d="M20 120 C 220 -20, 360 260, 470 180 S 640 40, 760 240 S 980 520, 1180 380"/></svg>
+        <article class="step" data-reveal>
+          <figure style="--i:0"><img src="assets/card-chill.webp" alt="A WHIRL Chocolate Swirl bottle standing in a soft spotlight" loading="lazy" width="1200" height="1600"><span class="n">01 / Chill</span></figure>
+          <h3 style="--i:1">Chill it</h3>
+          <p style="--i:2">Keep a row in the fridge. WHIRL tastes best properly cold.</p>
+        </article>
+        <article class="step" data-reveal>
+          <figure style="--i:0"><img src="assets/card-shake.webp" alt="Chocolate milk and ice splashing around a WHIRL bottle" loading="lazy" width="1200" height="1600"><span class="n">02 / Shake</span></figure>
+          <h3 style="--i:1">Shake it</h3>
+          <p style="--i:2">Three seconds of shaking wakes up the cocoa and makes it extra thick.</p>
+        </article>
+        <article class="step" data-reveal>
+          <figure style="--i:0"><img src="assets/card-drink.webp" alt="Close up of the Chocolate Swirl label showing 0g added sugar and BCAAs" loading="lazy" width="1200" height="1600"><span class="n">03 / Sip</span></figure>
+          <h3 style="--i:1">Drink it</h3>
+          <p style="--i:2">Within an hour of training, or whenever you want something sweet that works for you.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive: hold to shake -->
+  <section class="shake pad" id="shake" aria-labelledby="shH">
+    <div class="wrap grid">
+      <div class="bottlebox" data-reveal>
+        <img id="shakeImg" src="assets/shake-bottle.webp" alt="A WHIRL Chocolate Swirl bottle in a dark studio" loading="lazy" width="1280" height="1600" style="--i:0">
+        <div class="glow" id="shakeGlow" aria-hidden="true"></div>
+      </div>
+      <div>
+        <div data-reveal>
+          <span class="kicker" style="--i:0">Try it</span>
+          <h2 class="h2" id="shH" style="--i:1">Give it a shake.</h2>
+          <p class="lede" style="--i:2">Press and hold the button until the ring closes. That's how long it takes to get the good stuff moving.</p>
+        </div>
+        <div class="holdwrap">
+          <button class="hold" id="hold" type="button" aria-describedby="holdNote">
+            <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="t" cx="60" cy="60" r="54"/><circle class="p" id="holdRing" cx="60" cy="60" r="54"/></svg>
+            <span id="holdTxt">Press<br>and hold</span>
+          </button>
+          <p class="holdnote" id="holdNote">Keyboard: hold the space bar while the button is focused.</p>
+        </div>
+        <div class="panel" id="panel" aria-live="polite">
+          <div class="row"><span>Protein</span><b>25g</b></div>
+          <div class="row"><span>Added sugar</span><b>0g</b></div>
+          <div class="row"><span>BCAAs</span><b>Built in</b></div>
+          <div class="row"><span>Milk</span><b>Ultra-filtered</b></div>
+          <div class="row"><span>Flavor</span><b>Chocolate Swirl</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq pad" id="faq" aria-labelledby="faqH">
+    <div class="wrap grid">
+      <div class="side" data-reveal>
+        <span class="kicker" style="--i:0">Questions</span>
+        <h2 class="h2" id="faqH" style="--i:1">Good to know.</h2>
+        <p class="lede" style="--i:2">Can't find your answer? Write to us and a real person replies within a day.</p>
+      </div>
+      <div>
+        <details><summary>Does it taste chalky like other protein shakes?<span class="pm" aria-hidden="true"></span></summary><p class="ans">No. The protein comes from filtered milk, not powder, so there is nothing to dissolve. It drinks like a cold chocolate milkshake, smooth all the way down.</p></details>
+        <details><summary>What are BCAAs, and why are they in there?<span class="pm" aria-hidden="true"></span></summary><p class="ans">BCAAs are three amino acids: leucine, isoleucine and valine. Your muscles use them to repair after training. Milk protein is naturally rich in them, and filtering keeps them in.</p></details>
+        <details><summary>When should I drink it?<span class="pm" aria-hidden="true"></span></summary><p class="ans">Within an hour after training works well. Plenty of people also have one at breakfast or as an afternoon snack. It's food, so drink it when you're hungry.</p></details>
+        <details><summary>Does it need to stay in the fridge?<span class="pm" aria-hidden="true"></span></summary><p class="ans">Unopened bottles keep in the cupboard for months. Once opened, keep it cold and finish it within 24 hours. It tastes best chilled either way.</p></details>
+        <details><summary>Can I pause or cancel my subscription?<span class="pm" aria-hidden="true"></span></summary><p class="ans">Any time, from your account page. No calls, no forms, no fees. You can also skip a delivery or change your pack size.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Order -->
+  <section class="order" id="order" aria-labelledby="ordH">
+    <div class="wrap">
+      <div class="card" data-reveal>
+        <div class="img" style="--i:0"><img src="assets/order.webp" alt="A WHIRL bottle in a splash of chocolate milk and ice" loading="lazy" width="1800" height="1325"></div>
+        <form class="form" id="orderForm" style="--i:1" novalidate>
+          <span class="kicker">Chocolate Swirl</span>
+          <h2 class="h2" id="ordH">Stock the fridge.</h2>
+          <fieldset class="packs">
+            <legend>Pick a pack</legend>
+            <div class="pack"><input type="radio" name="pack" id="p6" value="6" data-price="21"><label for="p6"><b>6</b><span>$21</span></label></div>
+            <div class="pack"><input type="radio" name="pack" id="p12" value="12" data-price="36" checked><label for="p12"><b>12</b><span>$36 · popular</span></label></div>
+            <div class="pack"><input type="radio" name="pack" id="p24" value="24" data-price="66"><label for="p24"><b>24</b><span>$66 · best value</span></label></div>
+          </fieldset>
+          <label class="sub"><input type="checkbox" id="subToggle" checked> Subscribe and save 15%. Pause or cancel any time.</label>
+          <div class="total"><span class="amt" id="amt">$30.60</span><span class="per" id="per">$2.55 per bottle</span></div>
+          <div class="emailrow">
+            <label for="email" class="sr-only">Email address</label>
+            <input type="email" id="email" name="email" placeholder="you@email.com" autocomplete="email" required>
+            <button class="btn gold" type="submit">Reserve my pack <span class="arr" aria-hidden="true">→</span></button>
+          </div>
+          <p class="fine" id="formMsg">Free delivery over $35. We'll email you before anything ships.</p>
+          <div class="success" role="status"><b>You're in.</b><span id="successTxt">Your pack is reserved.</span></div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <a class="logo" href="#top" aria-label="WHIRL home"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 12c11 0 20 9 20 20s-9 20-20 20-16-7-16-15 6-13 13-13 11 5 11 10-4 8-8 8-6-3-6-6" fill="none" stroke="#d2b278" stroke-width="5" stroke-linecap="round"/></svg>WHIRL</a>
+        <p style="color:var(--muted);max-width:30ch;margin-top:16px">Ultra-filtered protein shake. Real milk, 25g of protein, 0g added sugar.</p>
+      </div>
+      <div class="cols">
+        <div><h4>Shop</h4><ul><li><a href="#order">Order a pack</a></li><li><a href="#order">Subscribe</a></li><li><a href="#numbers">Nutrition</a></li></ul></div>
+        <div><h4>Help</h4><ul><li><a href="#faq">FAQ</a></li><li><a href="mailto:hello@example.com">Contact</a></li><li><a href="#faq">Shipping</a></li></ul></div>
+        <div><h4>Follow</h4><ul><li><a href="#top">Instagram</a></li><li><a href="#top">TikTok</a></li></ul></div>
+      </div>
+    </div>
+    <div class="big" aria-hidden="true">WHIRL</div>
+    <div class="legal"><span>© 2026 WHIRL. All rights reserved.</span><span>Nutrition values per bottle.</span></div>
+  </div>
+</footer>
+
+<script>
+(() => {
+'use strict';
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const sstep = (p, e0, e1) => { const t = clamp((p - e0) / (e1 - e0), 0, 1); return t * t * (3 - 2 * t); };
+const rng = seed => { let s = seed >>> 0; return () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296; };
+const RM = matchMedia('(prefers-reduced-motion: reduce)');
+
+/* ---------- split headline text (once, seeded) ---------- */
+$$('[data-split]').forEach((el, ei) => {
+  const mode = el.dataset.split, fx = el.dataset.fx;
+  const ems = (el.dataset.em || '').split(',').filter(Boolean).map(Number);
+  const text = el.textContent.trim();
+  const r = rng(ei * 977 + 31);
+  el.textContent = '';
+  const sr = document.createElement('span'); sr.className = 'sr-only'; sr.textContent = text;
+  const vis = document.createElement('span'); vis.setAttribute('aria-hidden', 'true');
+  const words = text.split(' ');
+  const total = text.replace(/ /g, '').length;
+  let ci = 0;
+  words.forEach((w, wi) => {
+    const ws = document.createElement('span'); ws.className = 'w';
+    if (ems.includes(wi)) ws.classList.add('em');
+    ws.style.setProperty('--th', (wi / words.length * 0.45 + r() * 0.04).toFixed(3));
+    if (mode === 'c') {
+      [...w].forEach(ch => {
+        const c = document.createElement('span'); c.className = 'c'; c.textContent = ch;
+        if (fx === 'depth') {
+          c.style.setProperty('--th', (r() * 0.5).toFixed(3));
+          c.style.setProperty('--jx', ((r() - 0.5) * 140).toFixed(1) + 'px');
+          c.style.setProperty('--jy', ((r() - 0.5) * 90).toFixed(1) + 'px');
+        } else {
+          c.style.setProperty('--th', (ci / total * 0.5 + r() * 0.05).toFixed(3));
+          c.style.setProperty('--jy', ((ci % 2 ? 1 : -1) * (26 + r() * 30)).toFixed(1) + 'px');
+          c.style.setProperty('--jr', ((ci % 2 ? 1 : -1) * (8 + r() * 14)).toFixed(1) + 'deg');
+        }
+        ws.append(c); ci++;
+      });
+    } else ws.textContent = w;
+    vis.append(ws);
+    if (wi < words.length - 1) vis.append(' ');
+  });
+  el.append(sr, vis);
+});
+
+/* ---------- hero: HD image sequence scrubbed by scroll ---------- */
+const hero = $('#top'), stage = $('#stage');
+const canvas = $('#seq'), ctx = canvas.getContext('2d', { alpha: false });
+const poster = $('#poster');
+const cue = $('.cue'), cueTxt = $('#cueTxt'), rail = $('#rail'), hudNum = $('#hudNum');
+const N = 190;
+let FRAME_DIR = 'assets/frames-1080/';
+const SRC = i => FRAME_DIR + 'f' + String(i).padStart(3, '0') + '.webp';
+const frames = new Array(N);
+let haveCount = 0, failCount = 0, W = 0, H = 0, cw = 0, ch = 0, heroTop = 0, heroRange = 1, dirty = true, lastF = -1;
+
+function measure() {
+  W = innerWidth; H = innerHeight;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const nw = Math.round(W * dpr), nh = Math.round(H * dpr);
+  if (nw !== cw || nh !== ch) { cw = canvas.width = nw; ch = canvas.height = nh; ctx.imageSmoothingQuality = 'high'; }
+  heroTop = hero.getBoundingClientRect().top + scrollY;
+  heroRange = Math.max(1, hero.offsetHeight - H);
+  dirty = true;
+}
+function heroProgress() { return clamp((scrollY - heroTop) / heroRange, 0, 1); }
+function nearest(i) {
+  if (frames[i]) return i;
+  for (let d = 1; d < N; d++) {
+    if (i - d >= 0 && frames[i - d]) return i - d;
+    if (i + d < N && frames[i + d]) return i + d;
+  }
+  return -1;
+}
+function drawImg(im, a) {
+  const s = Math.max(cw / im.naturalWidth, ch / im.naturalHeight);
+  const dw = im.naturalWidth * s, dh = im.naturalHeight * s;
+  ctx.globalAlpha = a;
+  ctx.drawImage(im, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
+}
+function render(p) {
+  const f = p * (N - 1);
+  if (!dirty && Math.abs(f - lastF) < 0.004) return;
+  const i = Math.floor(f), t = f - i;
+  const a = nearest(i);
+  if (a < 0) return;
+  lastF = f; dirty = false;
+  drawImg(frames[a], 1);
+  // blend toward the next frame, so slow scrolling glides instead of stepping
+  if (a === i && t > 0.01 && i + 1 < N && frames[i + 1]) drawImg(frames[i + 1], t);
+  ctx.globalAlpha = 1;
+}
+
+function loadOrder() {
+  const o = [], seen = new Set();
+  const push = i => { if (!seen.has(i)) { seen.add(i); o.push(i); } };
+  push(0); push(N - 1);
+  for (const step of [12, 6, 3, 1]) for (let i = 0; i < N; i += step) push(i);
+  return o;
+}
+let lastRing = 0;
+function setLoadUI() {
+  const frac = haveCount / N, now = performance.now();
+  if (now - lastRing > 100 || frac === 1) {
+    lastRing = now;
+    cue.style.setProperty('--ld', Math.round(126 * (1 - frac)));
+    if (!stage.classList.contains('loaded')) cueTxt.textContent = 'Loading ' + Math.round(frac * 100) + '%';
+  }
+  if (frac >= 0.25 && !stage.classList.contains('loaded')) { stage.classList.add('loaded'); cueTxt.textContent = 'Scroll'; }
+}
+let loadStarted = false;
+function startLoading() {
+  if (loadStarted) return; loadStarted = true;
+  const q = loadOrder(); let qi = 0, active = 0;
+  const pump = () => {
+    while (active < 6 && qi < q.length) {
+      const i = q[qi++]; active++;
+      const im = new Image(); im.decoding = 'async'; im.src = SRC(i);
+      const done = ok => {
+        active--;
+        if (ok) {
+          frames[i] = im; haveCount++;
+          if (i === 0) { dirty = true; render(shown); stage.classList.add('ready'); startLoadRamp(); }
+          else if (Math.abs(i - shown * (N - 1)) < 3) { dirty = true; render(shown); }
+        } else if (++failCount > 20 && haveCount === 0) { stage.classList.add('loaded'); cueTxt.textContent = 'Scroll'; startLoadRamp(); }
+        setLoadUI(); pump();
+      };
+      im.decode ? im.decode().then(() => done(true), () => done(false)) : (im.onload = () => done(true), im.onerror = () => done(false));
+    }
+  };
+  pump();
+}
+
+/* bands */
+const bands = $$('.band').map((el, i, arr) => ({
+  el, a: +el.dataset.a, b: +el.dataset.b, first: i === 0, last: i === arr.length - 1,
+  ramp: +el.dataset.ramp || 0, op: -1, k: -1
+}));
+let loadK = 0;
+function updateBands(p) {
+  for (const B of bands) {
+    const f = Math.min(0.02, (B.b - B.a) / 3);
+    const o = (B.first ? 1 : sstep(p, B.a, B.a + f)) * (B.last ? 1 : 1 - sstep(p, B.b - f, B.b));
+    let k = clamp((p - B.a) / (B.ramp || Math.min(0.05, (B.b - B.a) * 0.35)), 0, 1);
+    if (B.first) k = Math.max(k, loadK);
+    if (Math.abs(o - B.op) > 0.004 || (o === 0) !== (B.op === 0) || (o === 1 && B.op !== 1)) {
+      B.op = o; B.el.style.opacity = o.toFixed(3); B.el.style.visibility = o < 0.003 ? 'hidden' : 'visible';
+    }
+    if (Math.abs(k - B.k) > 0.008 || (k === 1 && B.k !== 1) || (k === 0 && B.k !== 0)) {
+      B.k = k; B.el.style.setProperty('--k', k.toFixed(3));
+    }
+  }
+}
+let loadRampStarted = false;
+function startLoadRamp() {
+  if (loadRampStarted) return; loadRampStarted = true;
+  const t0 = performance.now();
+  const step = now => {
+    const t = clamp((now - t0) / 1700, 0, 1);
+    loadK = 1 - Math.pow(1 - t, 3);
+    updateBands(shown);
+    if (t < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+/* HUD */
+let lastHud = '', lastHudAt = 0, lastRail = -1, scrolledCls = false;
+function updateHud(p, now) {
+  if (Math.abs(p - lastRail) > 0.002) { lastRail = p; rail.style.transform = 'scaleY(' + p.toFixed(3) + ')'; }
+  const sc = p > 0.01;
+  if (sc !== scrolledCls) { scrolledCls = sc; stage.classList.toggle('scrolled', sc); }
+  if (now - lastHudAt < 100) return;
+  const txt = String(Math.round(p * 25)).padStart(2, '0') + 'G';
+  if (txt !== lastHud) { lastHud = txt; lastHudAt = now; hudNum.textContent = txt; }
+}
+
+/* drive loop: eased toward the scroll position, rests when it arrives */
+let target = 0, shown = 0, rafId = null, lastTick = 0, heroOnScreen = true;
+function tick(now) {
+  const dt = Math.min(100, now - (lastTick || now));
+  lastTick = now;
+  shown += (target - shown) * (1 - Math.pow(1 - 0.11, dt / 16.667));
+  if (Math.abs(target - shown) < 0.0002) { shown = target; rafId = null; lastTick = 0; }
+  else rafId = requestAnimationFrame(tick);
+  render(shown);
+  updateBands(shown);
+  updateHud(shown, now);
+}
+function onScroll() {
+  target = heroProgress();
+  if (rafId === null && heroOnScreen) rafId = requestAnimationFrame(tick);
+}
+new IntersectionObserver(es => { heroOnScreen = es[0].isIntersecting; if (heroOnScreen) onScroll(); }).observe(hero);
+
+let heroInit = false;
+function initHeroOnce() {
+  if (heroInit) return; heroInit = true;
+  FRAME_DIR = cw >= 1500 ? 'assets/frames-1080/' : 'assets/frames-720/';   // full HD where the screen can show it
+  poster.style.backgroundImage = "url('assets/seq-poster.webp')";
+  const pi = new Image();
+  pi.onload = pi.onerror = startLoading;
+  pi.src = 'assets/seq-poster.webp';
+  setTimeout(startLoading, 2500);
+}
+const GATES = [
+  '(max-width: 720px)',
+  '(orientation: portrait) and (max-width: 1024px)',
+  '(orientation: portrait) and (pointer: coarse)',
+  '(orientation: landscape) and (pointer: coarse) and (max-height: 560px)',
+  '(prefers-reduced-motion: reduce)'
+];
+let scrubOn = false;
+function enableScrub() {
+  if (scrubOn) return; scrubOn = true;
+  measure();
+  initHeroOnce();
+  addEventListener('scroll', onScroll, { passive: true });
+  bands.forEach(b => { b.op = -1; b.k = -1; });
+  shown = target = heroProgress();
+  dirty = true; render(shown);
+  updateBands(shown);
+  onScroll();
+}
+function disableScrub() {
+  if (!scrubOn) return; scrubOn = false;
+  removeEventListener('scroll', onScroll);
+  if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+}
+function applyHeroMode() { if (GATES.some(q => matchMedia(q).matches)) disableScrub(); else enableScrub(); }
+const MQLS = GATES.map(q => matchMedia(q));
+MQLS.forEach(m => m.addEventListener('change', applyHeroMode));
+addEventListener('resize', () => { if (scrubOn) { measure(); render(shown); onScroll(); } measurePage(); });
+
+/* ---------- page-level scroll drives ---------- */
+const nav = $('#nav');
+const fillSec = $('#numbers'), fillLevel = $('#fillLevel'), fillPct = $('#fillPct');
+const steps = $('#steps'), swirl = $('#swirlPath');
+let swirlLen = 0;
+try { swirlLen = swirl.getTotalLength(); swirl.style.strokeDasharray = swirlLen; swirl.style.strokeDashoffset = swirlLen; } catch (e) {}
+let navOn = null, lastFill = -1, lastSwirl = -1, pageRaf = null;
+let fillTop = 0, fillH = 1, stepsTop = 0, stepsH = 1;
+function measurePage() {
+  fillTop = fillSec.getBoundingClientRect().top + scrollY; fillH = fillSec.offsetHeight;
+  stepsTop = steps.getBoundingClientRect().top + scrollY; stepsH = steps.offsetHeight;
+}
+function pageDrive() {
+  pageRaf = null;
+  const y = scrollY, vh = innerHeight;
+  const on = y > 40;
+  if (on !== navOn) { navOn = on; nav.classList.toggle('scrolled', on); }
+  const rm = RM.matches;
+  // wordmark fill: empty as it enters, full by the time it reaches upper third
+  let fp = rm ? 1 : clamp((y + vh - fillTop - vh * 0.25) / (vh * 0.9), 0, 1);
+  if (Math.abs(fp - lastFill) > 0.003) {
+    lastFill = fp;
+    fillLevel.setAttribute('transform', 'translate(0 ' + (262 - fp * 290).toFixed(1) + ')');
+    fillPct.textContent = Math.round(fp * 100) + '%';
+  }
+  if (swirlLen) {
+    let sp = rm ? 1 : clamp((y + vh * 0.8 - stepsTop) / (stepsH * 0.9), 0, 1);
+    if (Math.abs(sp - lastSwirl) > 0.003) { lastSwirl = sp; swirl.style.strokeDashoffset = (swirlLen * (1 - sp)).toFixed(1); }
+  }
+}
+addEventListener('scroll', () => { if (pageRaf === null) pageRaf = requestAnimationFrame(pageDrive); }, { passive: true });
+
+/* ---------- reveals, counters, live loops ---------- */
+const countUp = el => {
+  const to = +el.dataset.count;
+  if (RM.matches) { el.textContent = to; return; }
+  const t0 = performance.now(), dur = 1500;
+  const f = now => { const t = clamp((now - t0) / dur, 0, 1); el.textContent = Math.round(to * (1 - Math.pow(1 - t, 4))); if (t < 1) requestAnimationFrame(f); };
+  requestAnimationFrame(f);
+};
+const rio = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  const el = e.target; el.classList.add('in'); rio.unobserve(el);
+  $$('[data-count]', el).forEach(countUp);
+  setTimeout(() => el.classList.add('done'), 1400);
+}), { threshold: 0.18, rootMargin: '0px 0px -6% 0px' });
+$$('[data-reveal]').forEach(el => rio.observe(el));
+const lio = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('live', e.isIntersecting)));
+[$('#ticker'), fillSec].forEach(el => lio.observe(el));
+document.addEventListener('visibilitychange', () => document.body.classList.toggle('paused', document.hidden));
+
+/* ---------- the one interaction: hold to shake ---------- */
+const holdBtn = $('#hold'), holdRing = $('#holdRing'), holdTxt = $('#holdTxt');
+const shakeImg = $('#shakeImg'), glow = $('#shakeGlow'), rows = $$('#panel .row');
+const RING = 339.3;
+let hp = 0, holding = false, hRaf = null, hLast = 0, shaken = false;
+function holdRender(now) {
+  const amp = shaken ? 0 : hp;
+  const t = now / 1000;
+  shakeImg.style.transform = amp > 0.001
+    ? 'translate(' + (Math.sin(t * 47) * 7 * amp).toFixed(2) + 'px,' + (Math.cos(t * 39) * 5 * amp).toFixed(2) + 'px) rotate(' + (Math.sin(t * 31) * 4 * amp).toFixed(2) + 'deg) scale(' + (1 + amp * 0.04).toFixed(3) + ')'
+    : '';
+  glow.style.opacity = (shaken ? 0.55 : hp * 0.8).toFixed(3);
+  holdRing.style.strokeDashoffset = (RING * (1 - hp)).toFixed(1);
+}
+function holdTick(now) {
+  const dt = Math.min(50, now - (hLast || now)); hLast = now;
+  if (holding && !shaken) hp = Math.min(1, hp + dt / 1700);
+  else if (!shaken) hp = Math.max(0, hp - dt / 900);
+  holdRender(now);
+  if (hp >= 1 && !shaken) finishShake();
+  if (shaken || (!holding && hp <= 0)) { hRaf = null; hLast = 0; holdRender(now); return; }
+  hRaf = requestAnimationFrame(holdTick);
+}
+function finishShake() {
+  shaken = true; hp = 1;
+  holdBtn.classList.remove('on');
+  holdTxt.innerHTML = 'Shaken.<br>Cheers.';
+  holdBtn.setAttribute('aria-pressed', 'true');
+  rows.forEach((r, i) => setTimeout(() => r.classList.add('lit'), RM.matches ? 0 : 140 * i));
+}
+function startHold(e) {
+  if (shaken) return;
+  if (e && e.type === 'pointerdown') { e.preventDefault(); try { holdBtn.setPointerCapture(e.pointerId); } catch (_) {} }
+  if (RM.matches) { finishShake(); holdRender(performance.now()); return; }
+  holding = true; holdBtn.classList.add('on');
+  if (hRaf === null) hRaf = requestAnimationFrame(holdTick);
+}
+function endHold() {
+  holding = false; holdBtn.classList.remove('on');
+  if (hRaf === null && !shaken && hp > 0) hRaf = requestAnimationFrame(holdTick);
+}
+holdBtn.addEventListener('pointerdown', startHold);
+['pointerup', 'pointercancel', 'lostpointercapture'].forEach(ev => holdBtn.addEventListener(ev, endHold));
+holdBtn.addEventListener('keydown', e => { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) { e.preventDefault(); startHold(); } });
+holdBtn.addEventListener('keyup', e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); endHold(); } });
+holdBtn.addEventListener('contextmenu', e => e.preventDefault());
+
+/* ---------- order form (no backend yet: success state only) ---------- */
+const form = $('#orderForm'), amt = $('#amt'), per = $('#per'), subT = $('#subToggle');
+function price() {
+  const r = $('input[name="pack"]:checked', form);
+  const base = +r.dataset.price, n = +r.value;
+  const tot = subT.checked ? base * 0.85 : base;
+  amt.textContent = '$' + tot.toFixed(2);
+  per.textContent = '$' + (tot / n).toFixed(2) + ' per bottle';
+}
+form.addEventListener('change', price); price();
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  const email = $('#email');
+  if (!email.value || !email.checkValidity()) {
+    $('#formMsg').textContent = 'Add a valid email so we can confirm your order.';
+    email.focus(); return;
+  }
+  const n = $('input[name="pack"]:checked', form).value;
+  $('#successTxt').textContent = 'Your ' + n + '-pack is reserved. We’ll email ' + email.value + ' before it ships.';
+  $('#formMsg').textContent = '';
+  $('#order').classList.add('sent');
+});
+
+/* reduced motion flips, live, both ways */
+RM.addEventListener('change', () => { lastFill = -1; lastSwirl = -1; pageDrive(); applyHeroMode(); });
+
+measurePage();
+applyHeroMode();
+pageDrive();
+})();
+</script>
+</body>
+</html>
