@@ -70,14 +70,14 @@ button,input{font:inherit;color:inherit}
 
 /* ---------- hero: one sharp photo ---------- */
 .hero{position:relative;height:100vh;height:100svh;min-height:600px;overflow:hidden;background:#000;display:flex;align-items:center}
-.hero-media{position:absolute;inset:-14px -14px -14px 12vw;will-change:transform;-webkit-mask-image:linear-gradient(to right,transparent,#000 24%);mask-image:linear-gradient(to right,transparent,#000 24%)}
+.hero-media{position:absolute;inset:-14px;will-change:transform}
 .hero-media img{width:100%;height:100%;max-width:none;object-fit:cover;object-position:50% 22%;animation:heroin 2.4s var(--ease) both}
 @keyframes heroin{from{opacity:0;transform:scale(1.06)}to{opacity:1;transform:scale(1)}}
 .hero-shade{position:absolute;inset:0;pointer-events:none;background:
-  linear-gradient(90deg,rgba(0,0,0,.7) 0%,rgba(0,0,0,.45) 26%,rgba(0,0,0,0) 46%),
+  linear-gradient(90deg,rgba(0,0,0,.8) 0%,rgba(0,0,0,.55) 24%,rgba(0,0,0,.12) 40%,rgba(0,0,0,0) 46%),
   linear-gradient(to bottom,rgba(0,0,0,.55),rgba(0,0,0,0) 18%,rgba(0,0,0,0) 74%,var(--bg) 100%)}
 .hero-copy{position:relative;z-index:1;width:min(1240px,100% - 40px);margin-inline:auto;padding-top:40px;text-shadow:var(--tshadow)}
-.hero-copy .inner{max-width:min(38vw,540px)}
+.hero-copy .inner{max-width:min(36vw,520px)}
 .hero h1{font-family:var(--display);font-weight:900;text-transform:uppercase;line-height:.9;letter-spacing:.005em;margin:18px 0 0;font-size:clamp(54px,6.4vw,112px)}
 .hero h1 .w{display:inline-block;animation:rise 1.1s var(--ease) both;animation-delay:calc(.5s + var(--i,0)*90ms)}
 .hero h1 .em{color:var(--gold)}
@@ -296,7 +296,7 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
 <section class="hero" id="top" aria-label="Introduction">
   <picture class="hero-media" id="heroMedia">
     <source media="(max-width: 720px), (orientation: portrait) and (max-width: 1024px)" srcset="assets/hero-ice-m-1080.webp 1080w, assets/hero-ice-m-1620.webp 1620w" sizes="100vw">
-    <img src="assets/hero-ice-1920.webp" srcset="assets/hero-ice-1280.webp 1280w, assets/hero-ice-1920.webp 1920w, assets/hero-ice-2560.webp 2560w, assets/hero-ice-3840.webp 3840w" sizes="(max-aspect-ratio: 3/2) 152vh, 92vw" alt="A bottle of WHIRL Chocolate Swirl protein shake in a crown of chocolate milk splash with ice cubes flying" width="3840" height="2576" fetchpriority="high">
+    <img src="assets/hero-ice-1920.webp" srcset="assets/hero-ice-1280.webp 1280w, assets/hero-ice-1920.webp 1920w, assets/hero-ice-2560.webp 2560w, assets/hero-ice-3840.webp 3840w" sizes="(max-aspect-ratio: 3/2) 152vh, calc(100vw + 60px)" alt="A bottle of WHIRL Chocolate Swirl protein shake in a crown of chocolate milk splash with ice cubes flying" width="3840" height="2576" fetchpriority="high">
   </picture>
   <div class="hero-shade" aria-hidden="true"></div>
   <div class="hero-copy">
@@ -388,7 +388,7 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
       <div class="steps" id="steps">
         <svg class="swirl" viewBox="0 0 1200 600" preserveAspectRatio="none" aria-hidden="true"><path id="swirlPath" d="M20 120 C 220 -20, 360 260, 470 180 S 640 40, 760 240 S 980 520, 1180 380"/></svg>
         <article class="step" data-reveal>
-          <figure style="--i:0"><img src="assets/card-chill.webp" alt="A WHIRL Chocolate Swirl bottle standing in a soft spotlight" loading="lazy" width="1200" height="1600"><span class="n">01 / Chill</span></figure>
+          <figure style="--i:0"><img src="assets/card-chill.webp" alt="A WHIRL bottle with ice cubes and chocolate milk flying around it" loading="lazy" width="1200" height="1600"><span class="n">01 / Chill</span></figure>
           <h3 style="--i:1">Chill it</h3>
           <p style="--i:2">Keep a row in the fridge. WHIRL tastes best properly cold.</p>
         </article>
@@ -398,7 +398,7 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
           <p style="--i:2">Three seconds of shaking wakes up the cocoa and makes it extra thick.</p>
         </article>
         <article class="step" data-reveal>
-          <figure style="--i:0"><img src="assets/card-drink.webp" alt="Close up of the Chocolate Swirl label showing 0g added sugar and BCAAs" loading="lazy" width="1200" height="1600"><span class="n">03 / Sip</span></figure>
+          <figure style="--i:0"><img src="assets/card-drink.webp" alt="An open WHIRL bottle with the cap off, ready to drink" loading="lazy" width="1200" height="1600"><span class="n">03 / Sip</span></figure>
           <h3 style="--i:1">Drink it</h3>
           <p style="--i:2">Within an hour of training, or whenever you want something sweet that works for you.</p>
         </article>
