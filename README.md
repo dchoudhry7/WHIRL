@@ -2,7 +2,7 @@
 
 Website for WHIRL Chocolate Swirl, an ultra-filtered protein shake.
 
-The hero is a scroll-driven animation: 190 HD frames drawn to a canvas, with each step blended between the two nearest frames so scrolling stays smooth. Below it is the full site: the numbers, a comparison table, the ritual, a hold-to-shake interaction, FAQ and an order form.
+The hero is a single product photo, AI-upscaled 4x and served in several sizes (1280 to 3840 px wide), so every screen gets an image at least as large as it displays and it never looks pixelated. Below it is the full site: the numbers, a comparison table, the ritual, a hold-to-shake interaction, FAQ and an order form.
 
 Plain HTML, CSS and JavaScript. No build step.
 
@@ -17,11 +17,9 @@ Then open http://localhost:8080. Opening `index.html` directly also works, but a
 ## Structure
 
 - `index.html`: the whole site (markup, styles, scripts)
-- `assets/frames-1080/`: 1920×1080 scroll frames for laptops and desktops
-- `assets/frames-720/`: 1280×720 scroll frames for smaller screens
-- `assets/*.webp`: section images and the phone hero
-
-Phones and reduced-motion visitors get a still hero image instead of the frame sequence.
+- `assets/hero-ice-*.webp`: the hero photo in 1280, 1920, 2560 and 3840 px widths
+- `assets/hero-ice-m-*.webp`: a portrait crop of the hero for phones
+- `assets/*.webp`: section images
 
 ## Still to do
 
