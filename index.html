@@ -496,9 +496,9 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
           <p style="--i:2">Three seconds of shaking wakes up the cocoa and makes it extra thick.</p>
         </article>
         <article class="step" data-reveal>
-          <figure style="--i:0"><img src="assets/card-drink.webp" alt="An open WHIRL bottle with the cap off, ready to drink" loading="lazy" width="1200" height="1600"><span class="n">03 / Sip</span></figure>
-          <h3 style="--i:1">Drink it</h3>
-          <p style="--i:2">Within an hour of training, or whenever you want something sweet that works for you.</p>
+          <figure style="--i:0"><img src="assets/card-crack.webp" alt="A hand twisting the cap off a WHIRL bottle on a gym floor, with a lifter and barbell behind" loading="lazy" width="1200" height="1600"><span class="n">03 / Crack</span></figure>
+          <h3 style="--i:1">Crack it</h3>
+          <p style="--i:2">Twist, sip, done. Right after training is ideal, but any time you want something sweet that works for you.</p>
         </article>
       </div>
     </div>
@@ -653,8 +653,9 @@ const hero = $('#top'), stage = $('#stage');
 const canvas = $('#seq'), ctx = canvas.getContext('2d', { alpha: false });
 const poster = $('#poster');
 const cue = $('.cue'), cueTxt = $('#cueTxt'), rail = $('#rail'), hudNum = $('#hudNum');
-const N = 121;
-let FRAME_DIR = 'assets/seq-1080/';
+const N = 241;   // 121 real frames + 120 AI in-between frames (RIFE)
+let FRAME_DIR = 'assets/f1080/';
+let lastKey = '';
 let stillS = null, stillE = null;   // 4K-class stills for the opening and closing moments
 const SRC = i => FRAME_DIR + 'f' + String(i).padStart(3, '0') + '.webp';
 const frames = new Array(N);
@@ -685,19 +686,15 @@ function drawImg(im, a) {
   ctx.drawImage(im, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
 }
 function render(p) {
-  const f = p * (N - 1);
-  if (!dirty && Math.abs(f - lastF) < 0.004) return;
-  const i = Math.floor(f), t = f - i;
+  const i = Math.round(p * (N - 1));   // one real frame at a time: no blending, so no ghosting
   const a = nearest(i);
   const aS = stillS ? 1 - sstep(p, 0.015, 0.075) : 0;   // sharp opening still hands over to the frames
   const aE = stillE ? sstep(p, 0.93, 0.985) : 0;        // and the frames settle into the sharp closing still
   if (a < 0 && !aS) return;
-  lastF = f; dirty = false;
-  if (a >= 0) {
-    drawImg(frames[a], 1);
-    // blend toward the next frame, so slow scrolling glides instead of stepping
-    if (a === i && t > 0.01 && i + 1 < N && frames[i + 1]) drawImg(frames[i + 1], t);
-  }
+  const key = a + '|' + aS.toFixed(3) + '|' + aE.toFixed(3);
+  if (!dirty && key === lastKey) return;            // only touch the canvas when the picture changes
+  lastKey = key; dirty = false;
+  if (a >= 0) drawImg(frames[a], 1);
   if (aS > 0.001) drawImg(stillS, a < 0 ? 1 : aS);
   if (aE > 0.001) drawImg(stillE, aE);
   ctx.globalAlpha = 1;
@@ -707,7 +704,7 @@ function loadOrder() {
   const o = [], seen = new Set();
   const push = i => { if (!seen.has(i)) { seen.add(i); o.push(i); } };
   push(0); push(N - 1);
-  for (const step of [12, 6, 3, 1]) for (let i = 0; i < N; i += step) push(i);
+  for (const step of [16, 8, 4, 2, 1]) for (let i = 0; i < N; i += step) push(i);
   return o;
 }
 let lastRing = 0;
@@ -792,7 +789,7 @@ let target = 0, shown = 0, rafId = null, lastTick = 0, heroOnScreen = true;
 function tick(now) {
   const dt = Math.min(100, now - (lastTick || now));
   lastTick = now;
-  shown += (target - shown) * (1 - Math.pow(1 - 0.11, dt / 16.667));
+  shown += (target - shown) * (1 - Math.pow(1 - 0.1, dt / 16.667));
   if (Math.abs(target - shown) < 0.0002) { shown = target; rafId = null; lastTick = 0; }
   else rafId = requestAnimationFrame(tick);
   render(shown);
@@ -808,7 +805,7 @@ new IntersectionObserver(es => { heroOnScreen = es[0].isIntersecting; if (heroOn
 let heroInit = false;
 function initHeroOnce() {
   if (heroInit) return; heroInit = true;
-  FRAME_DIR = cw >= 1500 ? 'assets/seq-1080/' : 'assets/seq-720/';   // full HD where the screen can show it
+  FRAME_DIR = cw > 1100 ? 'assets/f1080/' : 'assets/f720/';   // full HD on every laptop and desktop
   const SW = cw > 2600 ? 3840 : cw > 1700 ? 2560 : 1920;
   const sImg = new Image(); sImg.decoding = 'async';
   sImg.onload = () => (sImg.decode ? sImg.decode().catch(() => {}) : Promise.resolve()).then(() => { stillS = sImg; dirty = true; render(shown); stage.classList.add('ready'); startLoadRamp(); });
