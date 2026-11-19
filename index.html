@@ -68,23 +68,20 @@ button,input{font:inherit;color:inherit}
 @media (max-width:860px){.nav ul{display:none}}
 @media (pointer:coarse){.btn{min-height:44px}}
 
-/* ---------- hero scrub ---------- */
-.hero{position:relative;height:700vh}
-.stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#000}
+/* ---------- hero: headline beside the film, which sits in its own clean block ---------- */
+.hero{position:relative;height:100vh;height:100svh;min-height:600px;background:var(--bg)}
+.stage{--padv:clamp(28px,5vh,56px);position:relative;height:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:clamp(32px,4.5vw,80px);padding:calc(76px + var(--padv)) clamp(24px,5vw,88px) var(--padv)}
+.film{position:relative;width:min(58vw,calc((100svh - 76px - 2 * var(--padv)) * 4 / 3),1100px);aspect-ratio:4/3;border-radius:24px;overflow:hidden;background:#120d14;box-shadow:0 0 0 1px rgba(214,170,104,.28),0 40px 80px -40px rgba(0,0,0,.9)}
 .poster,.seq{position:absolute;inset:0;width:100%;height:100%}
-.poster{background-size:cover;background-position:center}
-.seq{opacity:0;transition:opacity .9s var(--ease);transform:translateZ(0)}
+.poster{background-size:cover;background-position:49% 50%;background-repeat:no-repeat}
+.seq{opacity:0;transition:opacity .9s var(--ease)}
 .stage.ready .seq{opacity:1}
-.scrim{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,rgba(0,0,0,0) 84%,rgba(14,10,8,.9))}
-.band{position:absolute;top:50%;transform:translateY(-50%);width:min(31vw,480px);text-shadow:var(--tshadow);opacity:0;visibility:hidden;--k:0}
-.band.l{left:clamp(24px,5.5vw,96px)}
-.band.r{right:clamp(24px,5.5vw,96px);text-align:right}
-.band::before{content:"";position:absolute;inset:-60% -55%;z-index:-1;pointer-events:none;opacity:calc(.3 + .7*var(--k,1));background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(10,7,5,.78) 0%,rgba(10,7,5,.5) 46%,rgba(10,7,5,0) 76%)}
+.band{position:relative;max-width:560px;opacity:0;visibility:hidden;transition:opacity .5s var(--ease);--k:0}
+.band.on{opacity:1;visibility:visible}
 .kicker{font-family:var(--mono);font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
 .band .kicker{display:inline-block;margin-bottom:18px;opacity:var(--ks0,1)}
-.band h1,.band h2{font-family:var(--display);font-weight:900;text-transform:uppercase;line-height:.92;letter-spacing:.005em;margin:0;font-size:clamp(46px,5.6vw,104px)}
+.band h1,.band h2{font-family:var(--display);font-weight:900;text-transform:uppercase;line-height:.92;letter-spacing:.005em;margin:0;font-size:clamp(44px,4.9vw,96px)}
 .band p{margin:22px 0 0;font-size:clamp(16px,1.2vw,19px);color:#e3d5c4;max-width:34ch;--ks:clamp(0,(var(--k) - .55)*3,1);opacity:var(--ks);transform:translateY(calc((1 - var(--ks))*14px))}
-.band.r p{margin-left:auto}
 .band .ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px;--kb:clamp(0,(var(--k) - .75)*4,1);opacity:var(--kb);transform:translateY(calc((1 - var(--kb))*14px))}
 .w{display:inline-block;white-space:nowrap}
 .c{display:inline-block}
@@ -101,23 +98,19 @@ button,input{font:inherit;color:inherit}
 /* entrance: rise into staged settle (band 5) */
 .fx-rise .w{--kc:clamp(0,(var(--k) - var(--th,0))*2.6,1);opacity:var(--kc);transform:translateY(calc((1 - var(--kc))*40px))}
 
-/* HUD */
-.hud{position:absolute;right:clamp(16px,2.4vw,36px);bottom:clamp(20px,4vh,40px);display:flex;align-items:center;gap:14px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--latte);padding:10px 14px;background:rgba(14,10,8,.55);border:1px solid var(--line);border-radius:12px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-.hud .rail{width:4px;height:44px;border-radius:4px;background:rgba(241,230,216,.12);overflow:hidden;position:relative}
+/* the protein counter: a label on the film block's corner */
+.hud{position:absolute;right:14px;bottom:14px;display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--latte);padding:9px 13px;background:rgba(14,10,8,.72);border:1px solid var(--line);border-radius:12px}
+.hud .rail{width:4px;height:38px;border-radius:4px;background:rgba(241,230,216,.12);overflow:hidden;position:relative}
 .hud .rail i{position:absolute;inset:0;background:linear-gradient(to top,var(--cocoa),var(--gold));transform-origin:bottom;transform:scaleY(0)}
-.hud b{font-weight:500;color:var(--ink);font-size:20px;letter-spacing:.04em;display:block;line-height:1.1}
-.hud small{display:block;color:var(--dim);font-size:10.5px}
-.cue{position:absolute;left:50%;bottom:clamp(20px,4vh,40px);transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--latte);transition:opacity .6s var(--ease)}
-.cue .ring{width:40px;height:40px;color:var(--gold)}
+.hud b{font-weight:500;color:var(--ink);font-size:18px;letter-spacing:.04em;display:block;line-height:1.1}
+.hud small{display:block;color:var(--dim);font-size:10px}
+/* loading ring: bottom-left of the block, gone once the film has played */
+.cue{position:absolute;left:14px;bottom:14px;display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--latte);padding:8px 12px 8px 8px;background:rgba(14,10,8,.72);border:1px solid var(--line);border-radius:12px;transition:opacity .6s var(--ease)}
+.cue .ring{width:26px;height:26px;color:var(--gold)}
 .cue .ring circle{transition:stroke-dashoffset .3s linear}
 .cue .ring .track{stroke:rgba(241,230,216,.15)}
-.cue .mouse{width:22px;height:34px;border:1.5px solid var(--latte);border-radius:12px;position:relative;display:none}
-.cue .mouse::after{content:"";position:absolute;left:50%;top:7px;width:3px;height:7px;margin-left:-1.5px;border-radius:2px;background:var(--gold);animation:wheel 2.2s var(--ease) infinite}
-.stage.loaded .cue .ring{display:none}
-.stage.loaded .cue .mouse{display:block}
-.stage.scrolled .cue{opacity:0}
-@keyframes wheel{0%{transform:translateY(0);opacity:0}30%{opacity:1}100%{transform:translateY(12px);opacity:0}}
-@media (max-height:560px){.hud,.cue{display:none}}
+.stage.playing .cue,.stage.loaded .cue{opacity:0;pointer-events:none}
+@media (max-width:1000px){.stage{grid-template-columns:minmax(0,1fr) auto}.film{width:min(54vw,calc((100svh - 76px - 2 * var(--padv)) * 4 / 3))}}
 
 /* static hero (phones, portrait tablets, reduced motion): photo on top, words underneath */
 .hero-static{display:none;position:relative;padding:76px 20px 56px;overflow:hidden;background:#000}
@@ -332,56 +325,30 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
   <a class="btn gold" href="#order">Order now <span class="arr" aria-hidden="true">→</span></a>
 </nav>
 
-<!-- Scroll hero (laptops and desktops): HD frame sequence scrubbed by scroll -->
+<!-- Hero (laptops and desktops): headline beside the HD frame film, which plays once when the page opens -->
 <section class="hero" id="top" aria-label="Introduction">
   <div class="stage" id="stage">
-    <div class="poster" id="poster" aria-hidden="true"></div>
-    <canvas class="seq" id="seq" aria-hidden="true" tabindex="-1"></canvas>
-    <div class="scrim" aria-hidden="true"></div>
-
-    <div class="band l fx-depth" data-a="0" data-b="0.16">
+    <div class="band fx-depth" id="heroBand">
       <span class="kicker">Ultra-filtered protein shake</span>
       <h1 data-split="c" data-fx="depth">Chocolate milk grew up.</h1>
       <p>WHIRL Chocolate Swirl is a ready-to-drink protein shake. 25g of protein, 0g added sugar, and the taste of a real chocolate milkshake.</p>
-    </div>
-
-    <div class="band r fx-weave" data-a="0.2" data-b="0.36">
-      <span class="kicker">How it's made</span>
-      <h2 data-split="c" data-fx="weave">We filter the milk. Not the flavor.</h2>
-      <p>Real milk runs through ultra-fine filters. The protein comes through, so we never need to add sugar to make it taste good.</p>
-    </div>
-
-    <div class="band l fx-punch" data-a="0.4" data-b="0.58">
-      <span class="kicker">Per bottle</span>
-      <h2 data-split="w" data-fx="punch" data-em="0,2">25 grams. Zero chalk.</h2>
-      <p>Thick and smooth from the first sip to the last, with BCAAs built in. No grit at the bottom of the bottle.</p>
-    </div>
-
-    <div class="band r fx-drift" data-a="0.62" data-b="0.8">
-      <span class="kicker">Ready when you are</span>
-      <h2 data-split="w" data-fx="drift">No shaker. No scoop. No clumps.</h2>
-      <p>Keep a few in the fridge. Crack one open on the walk home from the gym.</p>
-    </div>
-
-    <div class="band l fx-rise" data-a="0.84" data-b="1">
-      <span class="kicker">Chocolate Swirl · 6, 12 and 24 packs</span>
-      <h2 data-split="w" data-fx="rise" data-em="3">Cold from the fridge. Gone in a minute.</h2>
-      <p>Free delivery on orders over $35. Pause or cancel your subscription any time.</p>
       <div class="ctas">
         <a class="btn gold" href="#order">Order a pack <span class="arr" aria-hidden="true">→</span></a>
         <a class="btn" href="#numbers">See the numbers</a>
       </div>
     </div>
 
-    <div class="cue" aria-hidden="true">
-      <svg class="ring" viewBox="0 0 48 48"><circle class="track" cx="24" cy="24" r="20" fill="none" stroke-width="3"/><circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="126" stroke-linecap="round" transform="rotate(-90 24 24)" style="stroke-dashoffset:var(--ld,126)"/></svg>
-      <span class="mouse"></span>
-      <span id="cueTxt">Loading</span>
-    </div>
-
-    <div class="hud" aria-hidden="true">
-      <div class="rail"><i id="rail"></i></div>
-      <div><small>Protein loaded</small><b id="hudNum">00G</b></div>
+    <div class="film" id="film">
+      <div class="poster" id="poster" aria-hidden="true"></div>
+      <canvas class="seq" id="seq" aria-hidden="true" tabindex="-1"></canvas>
+      <div class="cue" aria-hidden="true">
+        <svg class="ring" viewBox="0 0 48 48"><circle class="track" cx="24" cy="24" r="20" fill="none" stroke-width="4"/><circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-width="4" stroke-dasharray="126" stroke-linecap="round" transform="rotate(-90 24 24)" style="stroke-dashoffset:var(--ld,126)"/></svg>
+        <span id="cueTxt">Loading</span>
+      </div>
+      <div class="hud" aria-hidden="true">
+        <div class="rail"><i id="rail"></i></div>
+        <div><small>Protein loaded</small><b id="hudNum">00G</b></div>
+      </div>
     </div>
   </div>
 </section>
@@ -648,7 +615,7 @@ $$('[data-split]').forEach((el, ei) => {
   el.append(sr, vis);
 });
 
-/* ---------- hero: HD image sequence scrubbed by scroll ---------- */
+/* ---------- hero: HD frame film, played once when the page opens ---------- */
 const hero = $('#top'), stage = $('#stage');
 const canvas = $('#seq'), ctx = canvas.getContext('2d', { alpha: false });
 const poster = $('#poster');
@@ -656,53 +623,20 @@ const cue = $('.cue'), cueTxt = $('#cueTxt'), rail = $('#rail'), hudNum = $('#hu
 const N = 241;   // 121 real frames + 120 AI in-between frames (RIFE)
 let FRAME_DIR = 'assets/f1080/';
 let lastKey = '';
-let stillS = null, stillE = null;   // 4K-class stills for the opening and closing moments
+let stillS = null;   // 4K-class still for the opening moment; the film itself freezes on its last frame
 const SRC = i => FRAME_DIR + 'f' + String(i).padStart(3, '0') + '.webp';
 const frames = new Array(N);
-let haveCount = 0, failCount = 0, W = 0, H = 0, cw = 0, ch = 0, heroTop = 0, heroRange = 1, dirty = true, lastF = -1;
+let haveCount = 0, failCount = 0, W = 0, H = 0, cw = 0, ch = 0, dirty = true;
 
+const filmEl = $('#film');
 function measure() {
   W = innerWidth; H = innerHeight;
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  const nw = Math.round(W * dpr), nh = Math.round(H * dpr);
-  if (nw !== cw || nh !== ch) { cw = canvas.width = nw; ch = canvas.height = nh; ctx.imageSmoothingQuality = 'high'; }
-  heroTop = hero.getBoundingClientRect().top + scrollY;
-  heroRange = Math.max(1, hero.offsetHeight - H);
-  layout();
+  const r = filmEl.getBoundingClientRect();
+  const nw = Math.round(r.width * dpr), nh = Math.round(r.height * dpr);
+  if (nw !== cw || nh !== ch) { cw = canvas.width = Math.max(1, nw); ch = canvas.height = Math.max(1, nh); ctx.imageSmoothingQuality = 'high'; }
   dirty = true;
 }
-// Where the film sits: fit the height below the menu bar, sit on the bottom edge,
-// and never draw bigger than the frames' real pixels (that is what made them soft).
-let R = { x: 0, y: 0, w: 1, h: 1 };
-function layout() {
-  const dpr = cw / Math.max(1, W);
-  const navEl = document.getElementById('nav');
-  const navPx = Math.round((navEl ? navEl.getBoundingClientRect().height : 76) * dpr);
-  const native = FRAME_DIR.indexOf('f720') >= 0 ? 720 : 1080;
-  const avail = ch - navPx;
-  const h = Math.min(avail, native * 1.25);   // fill the space under the header, with at most a mild upscale
-  const w = h * 16 / 9;
-  R = { x: (cw - w) / 2, y: navPx + Math.max(0, (avail - h) / 2), w, h, top: navPx };
-  // the loading placeholder uses the same framing as the film
-  poster.style.backgroundSize = (R.w / dpr).toFixed(1) + 'px ' + (R.h / dpr).toFixed(1) + 'px';
-  poster.style.backgroundPosition = (R.x / dpr).toFixed(1) + 'px ' + (R.y / dpr).toFixed(1) + 'px';
-  poster.style.backgroundRepeat = 'no-repeat';
-}
-// sample the frame's own background: split the top edge into ten slices and take the darkest,
-// so splash or ice touching the top never tints the fill
-const probe = document.createElement('canvas'); probe.width = 10; probe.height = 1;
-const pctx = probe.getContext('2d', { willReadFrequently: true });
-function bgOf(im) {
-  if (im._bg) return im._bg;
-  const w = im.naturalWidth, h = im.naturalHeight;
-  pctx.clearRect(0, 0, 10, 1);
-  pctx.drawImage(im, 0, 0, w, Math.round(h * 0.05), 0, 0, 10, 1);
-  const d = pctx.getImageData(0, 0, 10, 1).data;
-  let best = 0, bl = 1e9;
-  for (let k = 0; k < 10; k++) { const l = d[k * 4] * 0.3 + d[k * 4 + 1] * 0.59 + d[k * 4 + 2] * 0.11; if (l < bl) { bl = l; best = k; } }
-  return (im._bg = [d[best * 4], d[best * 4 + 1], d[best * 4 + 2]]);
-}
-function heroProgress() { return clamp((scrollY - heroTop) / heroRange, 0, 1); }
 function nearest(i) {
   if (frames[i]) return i;
   for (let d = 1; d < N; d++) {
@@ -711,162 +645,148 @@ function nearest(i) {
   }
   return -1;
 }
+// the block shows a 4:3 window of each 16:9 frame, centred on the bottle; it is never larger
+// than the frames' real pixels, so every frame is drawn crisp, edge to edge, with nothing blended
 function drawImg(im, a) {
-  const bg = bgOf(im), c0 = 'rgba(' + bg + ',1)', cm = 'rgba(' + bg + ',.45)', c1 = 'rgba(' + bg + ',0)';
+  const iw = im.naturalWidth, ih = im.naturalHeight, A = cw / ch;
+  let sw = iw, sh = ih;
+  if (iw / ih > A) sw = ih * A; else sh = iw / A;
+  const sx = clamp(iw * 0.49 - sw / 2, 0, iw - sw), sy = (ih - sh) / 2;
   ctx.globalAlpha = a;
-  ctx.fillStyle = c0;
-  if (R.x > 0) { ctx.fillRect(0, 0, Math.ceil(R.x) + 1, ch); ctx.fillRect(Math.floor(R.x + R.w) - 1, 0, cw, ch); }
-  if (R.y > R.top + 0.5) ctx.fillRect(0, 0, cw, R.y + 1);
-  ctx.drawImage(im, R.x, R.y, R.w, R.h);
-  if (R.x > 0) {   // fade the frame's left and right edges into its own background, so nothing smears
-    const fw = R.w * 0.09;
-    let g = ctx.createLinearGradient(R.x, 0, R.x + fw, 0);
-    g.addColorStop(0, c0); g.addColorStop(0.45, cm); g.addColorStop(1, c1);
-    ctx.fillStyle = g; ctx.fillRect(R.x - 1, R.y, fw + 1, R.h);
-    g = ctx.createLinearGradient(R.x + R.w, 0, R.x + R.w - fw, 0);
-    g.addColorStop(0, c0); g.addColorStop(0.45, cm); g.addColorStop(1, c1);
-    ctx.fillStyle = g; ctx.fillRect(R.x + R.w - fw, R.y, fw + 1, R.h);
-  }
-  if (R.y > R.top + 0.5) {   // only on very tall screens: melt the top edge into the background
-    const fh = R.h * 0.08, g = ctx.createLinearGradient(0, R.y, 0, R.y + fh);
-    g.addColorStop(0, c0); g.addColorStop(1, c1);
-    ctx.fillStyle = g; ctx.fillRect(0, R.y - 1, cw, fh + 1);
-  }
+  ctx.drawImage(im, sx, sy, sw, sh, 0, 0, cw, ch);
 }
 function render(p) {
   const i = Math.round(p * (N - 1));   // one real frame at a time: no blending, so no ghosting
   const a = nearest(i);
   const aS = stillS ? 1 - sstep(p, 0.015, 0.075) : 0;   // sharp opening still hands over to the frames
-  const aE = stillE ? sstep(p, 0.93, 0.985) : 0;        // and the frames settle into the sharp closing still
   if (a < 0 && !aS) return;
-  const key = a + '|' + aS.toFixed(3) + '|' + aE.toFixed(3);
+  const key = a + '|' + aS.toFixed(3);
   if (!dirty && key === lastKey) return;            // only touch the canvas when the picture changes
   lastKey = key; dirty = false;
   if (a >= 0) drawImg(frames[a], 1);
   if (aS > 0.001) drawImg(stillS, a < 0 ? 1 : aS);
-  if (aE > 0.001) drawImg(stillE, aE);
   ctx.globalAlpha = 1;
 }
 
-function loadOrder() {
-  const o = [], seen = new Set();
-  const push = i => { if (!seen.has(i)) { seen.add(i); o.push(i); } };
-  push(0); push(N - 1);
-  for (const step of [16, 8, 4, 2, 1]) for (let i = 0; i < N; i += step) push(i);
-  return o;
-}
-let lastRing = 0;
+/* loading: frames arrive in order; the film starts once it can play to the end without waiting */
+const settled = new Array(N).fill(false);
+let prefix = 0, loadStarted = false, loadT0 = 0, lastRing = 0;
 function setLoadUI() {
-  const frac = haveCount / N, now = performance.now();
-  if (now - lastRing > 100 || frac === 1) {
-    lastRing = now;
+  const now = performance.now();
+  if (now - lastRing < 100 && prefix < N) return;
+  lastRing = now;
+  if (playState === 0) {
+    const frac = prefix / N;
     cue.style.setProperty('--ld', Math.round(126 * (1 - frac)));
-    if (!stage.classList.contains('loaded')) cueTxt.textContent = 'Loading ' + Math.round(frac * 100) + '%';
+    cueTxt.textContent = 'Loading ' + Math.round(frac * 100) + '%';
   }
-  if (frac >= 0.25 && !stage.classList.contains('loaded')) { stage.classList.add('loaded'); cueTxt.textContent = 'Scroll'; }
 }
-let loadStarted = false;
 function startLoading() {
-  if (loadStarted) return; loadStarted = true;
-  const q = loadOrder(); let qi = 0, active = 0;
+  if (loadStarted) return; loadStarted = true; loadT0 = performance.now();
+  let qi = 0, active = 0;
   const pump = () => {
-    while (active < 6 && qi < q.length) {
-      const i = q[qi++]; active++;
+    while (active < 6 && qi < N) {
+      const i = qi++; active++;
       const im = new Image(); im.decoding = 'async'; im.src = SRC(i);
       const done = ok => {
         active--;
-        if (ok) {
-          frames[i] = im; haveCount++;
-          if (i === 0) { dirty = true; render(shown); stage.classList.add('ready'); startLoadRamp(); }
-          else if (Math.abs(i - shown * (N - 1)) < 3) { dirty = true; render(shown); }
-        } else if (++failCount > 20 && haveCount === 0) { stage.classList.add('loaded'); cueTxt.textContent = 'Scroll'; startLoadRamp(); }
-        setLoadUI(); pump();
+        if (ok) { frames[i] = im; haveCount++; } else failCount++;
+        settled[i] = true;
+        while (prefix < N && settled[prefix]) prefix++;
+        setLoadUI(); maybePlay(); pump();
       };
-      im.decode ? im.decode().then(() => done(true), () => done(false)) : (im.onload = () => done(true), im.onerror = () => done(false));
+      // count a frame once it has downloaded; decoding it ahead of time is a bonus, never a wait
+      im.onload = () => { if (im.decode) im.decode().catch(() => {}); done(true); };
+      im.onerror = () => done(false);
     }
   };
   pump();
 }
 
-/* bands */
-const bands = $$('.band').map((el, i, arr) => ({
-  el, a: +el.dataset.a, b: +el.dataset.b, first: i === 0, last: i === arr.length - 1,
-  ramp: +el.dataset.ramp || 0, op: -1, k: -1
-}));
-let loadK = 0;
-function updateBands(p) {
-  for (const B of bands) {
-    const f = Math.min(0.02, (B.b - B.a) / 3);
-    const o = (B.first ? 1 : sstep(p, B.a, B.a + f)) * (B.last ? 1 : 1 - sstep(p, B.b - f, B.b));
-    let k = clamp((p - B.a) / (B.ramp || Math.min(0.05, (B.b - B.a) * 0.35)), 0, 1);
-    if (B.first) k = Math.max(k, loadK);
-    if (Math.abs(o - B.op) > 0.004 || (o === 0) !== (B.op === 0) || (o === 1 && B.op !== 1)) {
-      B.op = o; B.el.style.opacity = o.toFixed(3); B.el.style.visibility = o < 0.003 ? 'hidden' : 'visible';
-    }
-    if (Math.abs(k - B.k) > 0.008 || (k === 1 && B.k !== 1) || (k === 0 && B.k !== 0)) {
-      B.k = k; B.el.style.setProperty('--k', k.toFixed(3));
-    }
+/* playback */
+const FPS = 48;   // 241 frames in about five seconds, the speed of the original footage
+let playState = 0, readyAt = 0, head = 0, shown = 0, rafId = null, lastTick = 0, heroOnScreen = true, filmOn = false;
+function maybePlay() {
+  if (playState !== 0 || !filmOn || !readyAt) return;
+  if (!heroOnScreen) { finish(); return; }            // already scrolled past: skip straight to the last frame
+  const now = performance.now();
+  if (now - readyAt < 900) return;                    // let the opening still breathe for a moment
+  if (prefix < N && now - loadT0 < 12000) {
+    const rate = haveCount / Math.max(0.25, (now - loadT0) / 1000);
+    if (prefix < 30 || (N - haveCount) / Math.max(rate, 0.001) > (N / FPS) * 0.75) return;
   }
+  playState = 1; stage.classList.add('playing');
+  lastTick = 0; rafId = requestAnimationFrame(tick);
 }
-let loadRampStarted = false;
-function startLoadRamp() {
-  if (loadRampStarted) return; loadRampStarted = true;
+setInterval(maybePlay, 250);
+function tick(now) {
+  rafId = null;
+  if (!filmOn) return;
+  if (!heroOnScreen) { finish(); return; }
+  const dt = Math.min(50, now - (lastTick || now));   // a hidden tab pauses the film instead of skipping it
+  lastTick = now;
+  let nh = head + dt * FPS / 1000;
+  if (prefix < N) nh = Math.min(nh, prefix - 1);    // never run ahead of the frames that have arrived
+  head = Math.min(N - 1, Math.max(head, nh));
+  shown = head / (N - 1);
+  render(shown); updateHud(shown);
+  if (shown >= 0.86) reveal();
+  if (head >= N - 1) { finish(); return; }
+  rafId = requestAnimationFrame(tick);
+}
+function finish() {
+  if (playState === 2) return;
+  playState = 2;
+  if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+  head = N - 1; shown = 1; dirty = true; render(1); updateHud(1);
+  stage.classList.remove('playing'); stage.classList.add('loaded');
+  cueTxt.textContent = 'Scroll';
+  reveal();
+}
+new IntersectionObserver(es => { heroOnScreen = es[0].isIntersecting; }).observe(hero);
+
+/* headline: arrives with the opening shot, beside the film */
+const heroBand = $('#heroBand');
+let revealed = false;
+function reveal() {
+  if (revealed) return; revealed = true;
+  heroBand.classList.add('on');
   const t0 = performance.now();
   const step = now => {
     const t = clamp((now - t0) / 1700, 0, 1);
-    loadK = 1 - Math.pow(1 - t, 3);
-    updateBands(shown);
+    heroBand.style.setProperty('--k', (1 - Math.pow(1 - t, 3)).toFixed(3));
     if (t < 1) requestAnimationFrame(step);
   };
   requestAnimationFrame(step);
 }
 
-/* HUD */
-let lastHud = '', lastHudAt = 0, lastRail = -1, scrolledCls = false;
-function updateHud(p, now) {
-  if (Math.abs(p - lastRail) > 0.002) { lastRail = p; rail.style.transform = 'scaleY(' + p.toFixed(3) + ')'; }
-  const sc = p > 0.01;
-  if (sc !== scrolledCls) { scrolledCls = sc; stage.classList.toggle('scrolled', sc); }
-  if (now - lastHudAt < 100) return;
+/* HUD follows the film */
+let lastHud = '', lastRail = -1;
+function updateHud(p) {
+  if (Math.abs(p - lastRail) > 0.002 || p === 1) { lastRail = p; rail.style.transform = 'scaleY(' + p.toFixed(3) + ')'; }
   const txt = String(Math.round(p * 25)).padStart(2, '0') + 'G';
-  if (txt !== lastHud) { lastHud = txt; lastHudAt = now; hudNum.textContent = txt; }
+  if (txt !== lastHud) { lastHud = txt; hudNum.textContent = txt; }
 }
-
-/* drive loop: eased toward the scroll position, rests when it arrives */
-let target = 0, shown = 0, rafId = null, lastTick = 0, heroOnScreen = true;
-function tick(now) {
-  const dt = Math.min(100, now - (lastTick || now));
-  lastTick = now;
-  shown += (target - shown) * (1 - Math.pow(1 - 0.1, dt / 16.667));
-  if (Math.abs(target - shown) < 0.0002) { shown = target; rafId = null; lastTick = 0; }
-  else rafId = requestAnimationFrame(tick);
-  render(shown);
-  updateBands(shown);
-  updateHud(shown, now);
-}
-function onScroll() {
-  target = heroProgress();
-  if (rafId === null && heroOnScreen) rafId = requestAnimationFrame(tick);
-}
-new IntersectionObserver(es => { heroOnScreen = es[0].isIntersecting; if (heroOnScreen) onScroll(); }).observe(hero);
+let scrolledCls = false;
+addEventListener('scroll', () => { const sc = scrollY > 40; if (sc !== scrolledCls) { scrolledCls = sc; stage.classList.toggle('scrolled', sc); } }, { passive: true });
 
 let heroInit = false;
 function initHeroOnce() {
   if (heroInit) return; heroInit = true;
-  FRAME_DIR = cw > 1100 ? 'assets/f1080/' : 'assets/f720/';   // full HD on every laptop and desktop
-  layout();
-  const SW = cw > 2600 ? 3840 : cw > 1700 ? 2560 : 1920;
+  FRAME_DIR = ch > 760 ? 'assets/f1080/' : 'assets/f720/';   // full HD whenever the block can show it
+  const full = ch * 16 / 9;                                  // width of the whole frame at this size
+  const SW = full > 2560 ? 3840 : full > 1920 ? 2560 : 1920;
   const sImg = new Image(); sImg.decoding = 'async';
-  sImg.onload = () => { stillS = sImg; dirty = true; render(shown); stage.classList.add('ready'); startLoadRamp(); };
+  const ready = () => { if (readyAt) return; readyAt = performance.now(); stage.classList.add('ready'); reveal(); };   // the headline arrives with the opening shot
+  sImg.onload = () => { stillS = sImg; dirty = true; render(shown); ready(); };
+  sImg.onerror = ready;
   sImg.src = 'assets/hero-start-' + SW + '.webp';
-  const eImg = new Image(); eImg.decoding = 'async';
-  eImg.onload = () => { stillE = eImg; dirty = true; render(shown); };
-  setTimeout(() => { eImg.src = 'assets/hero-end-' + SW + '.webp'; }, 600);
   poster.style.backgroundImage = "url('assets/hero-start-1920.webp')";
   const pi = new Image();
   pi.onload = pi.onerror = startLoading;
   pi.src = 'assets/hero-start-1920.webp';
   setTimeout(startLoading, 2500);
+  setTimeout(ready, 4000);
 }
 const GATES = [
   '(max-width: 720px)',
@@ -875,27 +795,21 @@ const GATES = [
   '(orientation: landscape) and (pointer: coarse) and (max-height: 560px)',
   '(prefers-reduced-motion: reduce)'
 ];
-let scrubOn = false;
-function enableScrub() {
-  if (scrubOn) return; scrubOn = true;
+function enableFilm() {
+  if (filmOn) return; filmOn = true;
   measure();
   initHeroOnce();
-  addEventListener('scroll', onScroll, { passive: true });
-  bands.forEach(b => { b.op = -1; b.k = -1; });
-  shown = target = heroProgress();
   dirty = true; render(shown);
-  updateBands(shown);
-  onScroll();
+  if (playState === 1 && rafId === null) { lastTick = 0; rafId = requestAnimationFrame(tick); }
 }
-function disableScrub() {
-  if (!scrubOn) return; scrubOn = false;
-  removeEventListener('scroll', onScroll);
+function disableFilm() {
+  if (!filmOn) return; filmOn = false;
   if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
 }
-function applyHeroMode() { if (GATES.some(q => matchMedia(q).matches)) disableScrub(); else enableScrub(); }
+function applyHeroMode() { if (GATES.some(q => matchMedia(q).matches)) disableFilm(); else enableFilm(); }
 const MQLS = GATES.map(q => matchMedia(q));
 MQLS.forEach(m => m.addEventListener('change', applyHeroMode));
-addEventListener('resize', () => { if (scrubOn) { measure(); render(shown); onScroll(); } measurePage(); });
+addEventListener('resize', () => { if (filmOn) { measure(); render(shown); } measurePage(); });
 
 /* ---------- page-level scroll drives ---------- */
 const nav = $('#nav');
