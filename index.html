@@ -30,7 +30,7 @@
   color-scheme:dark;
 }
 *,*::before,*::after{box-sizing:border-box}
-html{overflow-x:hidden;overflow-x:clip;-webkit-text-size-adjust:100%}
+html{overflow-x:hidden;overflow-x:clip;-webkit-text-size-adjust:100%;scroll-padding-top:76px}
 body{margin:0;overflow-x:hidden;overflow-x:clip;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;animation:pagein 1s var(--ease) both}
 @keyframes pagein{from{opacity:0}to{opacity:1}}
 img{max-width:100%;display:block}
@@ -52,8 +52,8 @@ button,input{font:inherit;color:inherit}
 @keyframes drift{0%{transform:rotate(0) scale(1)}50%{transform:rotate(180deg) scale(1.1)}100%{transform:rotate(360deg) scale(1)}}
 
 /* ---------- nav ---------- */
-.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:18px clamp(16px,4vw,48px);transition:background .5s var(--ease),backdrop-filter .5s var(--ease),padding .5s var(--ease),border-color .5s var(--ease);border-bottom:1px solid transparent}
-.nav.scrolled{background:rgba(14,10,8,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding-top:12px;padding-bottom:12px;border-color:var(--line)}
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:24px;height:76px;padding:0 clamp(16px,4vw,48px);background:rgba(10,8,11,.97);border-bottom:1px solid var(--line)}
+.nav.scrolled{background:rgba(10,8,11,.97)}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--display);font-weight:900;font-size:28px;letter-spacing:.04em;line-height:1}
 .logo svg{width:26px;height:26px}
 .nav ul{display:flex;gap:30px;list-style:none;margin:0;padding:0}
@@ -75,7 +75,7 @@ button,input{font:inherit;color:inherit}
 .poster{background-size:cover;background-position:center}
 .seq{opacity:0;transition:opacity .9s var(--ease);transform:translateZ(0)}
 .stage.ready .seq{opacity:1}
-.scrim{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,rgba(0,0,0,.5),rgba(0,0,0,0) 16%,rgba(0,0,0,0) 82%,rgba(14,10,8,.9))}
+.scrim{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,rgba(0,0,0,0) 84%,rgba(14,10,8,.9))}
 .band{position:absolute;top:50%;transform:translateY(-50%);width:min(31vw,480px);text-shadow:var(--tshadow);opacity:0;visibility:hidden;--k:0}
 .band.l{left:clamp(24px,5.5vw,96px)}
 .band.r{right:clamp(24px,5.5vw,96px);text-align:right}
@@ -120,7 +120,7 @@ button,input{font:inherit;color:inherit}
 @media (max-height:560px){.hud,.cue{display:none}}
 
 /* static hero (phones, portrait tablets, reduced motion): photo on top, words underneath */
-.hero-static{display:none;position:relative;padding:0 20px 56px;overflow:hidden;background:#000}
+.hero-static{display:none;position:relative;padding:76px 20px 56px;overflow:hidden;background:#000}
 .hero-static img{width:calc(100% + 40px);max-width:none;margin:0 -20px;height:min(72svh,700px);object-fit:cover;object-position:50% 50%;-webkit-mask-image:linear-gradient(to bottom,transparent,#000 12%,#000 74%,transparent);mask-image:linear-gradient(to bottom,transparent,#000 12%,#000 74%,transparent)}
 .hero-static .copy{position:relative;z-index:1;margin-top:-64px;text-shadow:var(--tshadow)}
 .hero-static h1{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(50px,13vw,92px);line-height:.9;margin:14px 0 0}
@@ -677,11 +677,12 @@ let R = { x: 0, y: 0, w: 1, h: 1 };
 function layout() {
   const dpr = cw / Math.max(1, W);
   const navEl = document.getElementById('nav');
-  const navPx = ((navEl ? navEl.getBoundingClientRect().height : 80) + 6) * dpr;
+  const navPx = Math.round((navEl ? navEl.getBoundingClientRect().height : 76) * dpr);
   const native = FRAME_DIR.indexOf('f720') >= 0 ? 720 : 1080;
-  const h = Math.min(ch - navPx, native);
+  const avail = ch - navPx;
+  const h = Math.min(avail, native * 1.25);   // fill the space under the header, with at most a mild upscale
   const w = h * 16 / 9;
-  R = { x: (cw - w) / 2, y: ch - h, w, h };
+  R = { x: (cw - w) / 2, y: navPx + Math.max(0, (avail - h) / 2), w, h, top: navPx };
   // the loading placeholder uses the same framing as the film
   poster.style.backgroundSize = (R.w / dpr).toFixed(1) + 'px ' + (R.h / dpr).toFixed(1) + 'px';
   poster.style.backgroundPosition = (R.x / dpr).toFixed(1) + 'px ' + (R.y / dpr).toFixed(1) + 'px';
@@ -711,19 +712,25 @@ function nearest(i) {
   return -1;
 }
 function drawImg(im, a) {
-  const iw = im.naturalWidth, ih = im.naturalHeight, bg = bgOf(im);
+  const bg = bgOf(im), c0 = 'rgba(' + bg + ',1)', cm = 'rgba(' + bg + ',.45)', c1 = 'rgba(' + bg + ',0)';
   ctx.globalAlpha = a;
-  if (R.y > 0) { ctx.fillStyle = 'rgb(' + bg + ')'; ctx.fillRect(0, 0, cw, R.y + 2); }
-  if (R.x > 0) {   // side strips: stretch the frame's plain edge columns outward
-    const sw = Math.max(2, Math.round(iw * 0.003));
-    ctx.drawImage(im, 0, 0, sw, ih, 0, R.y, R.x + 1, R.h);
-    ctx.drawImage(im, iw - sw, 0, sw, ih, R.x + R.w - 1, R.y, cw - R.x - R.w + 1, R.h);
-  }
+  ctx.fillStyle = c0;
+  if (R.x > 0) { ctx.fillRect(0, 0, Math.ceil(R.x) + 1, ch); ctx.fillRect(Math.floor(R.x + R.w) - 1, 0, cw, ch); }
+  if (R.y > R.top + 0.5) ctx.fillRect(0, 0, cw, R.y + 1);
   ctx.drawImage(im, R.x, R.y, R.w, R.h);
-  if (R.y > 0) {   // melt the frame's top edge into the background above it
-    const fh = R.h * 0.1, gr = ctx.createLinearGradient(0, R.y, 0, R.y + fh);
-    gr.addColorStop(0, 'rgba(' + bg + ',1)'); gr.addColorStop(1, 'rgba(' + bg + ',0)');
-    ctx.fillStyle = gr; ctx.fillRect(0, R.y - 1, cw, fh + 1);
+  if (R.x > 0) {   // fade the frame's left and right edges into its own background, so nothing smears
+    const fw = R.w * 0.09;
+    let g = ctx.createLinearGradient(R.x, 0, R.x + fw, 0);
+    g.addColorStop(0, c0); g.addColorStop(0.45, cm); g.addColorStop(1, c1);
+    ctx.fillStyle = g; ctx.fillRect(R.x - 1, R.y, fw + 1, R.h);
+    g = ctx.createLinearGradient(R.x + R.w, 0, R.x + R.w - fw, 0);
+    g.addColorStop(0, c0); g.addColorStop(0.45, cm); g.addColorStop(1, c1);
+    ctx.fillStyle = g; ctx.fillRect(R.x + R.w - fw, R.y, fw + 1, R.h);
+  }
+  if (R.y > R.top + 0.5) {   // only on very tall screens: melt the top edge into the background
+    const fh = R.h * 0.08, g = ctx.createLinearGradient(0, R.y, 0, R.y + fh);
+    g.addColorStop(0, c0); g.addColorStop(1, c1);
+    ctx.fillStyle = g; ctx.fillRect(0, R.y - 1, cw, fh + 1);
   }
 }
 function render(p) {
