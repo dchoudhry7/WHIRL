@@ -668,7 +668,38 @@ function measure() {
   if (nw !== cw || nh !== ch) { cw = canvas.width = nw; ch = canvas.height = nh; ctx.imageSmoothingQuality = 'high'; }
   heroTop = hero.getBoundingClientRect().top + scrollY;
   heroRange = Math.max(1, hero.offsetHeight - H);
+  layout();
   dirty = true;
+}
+// Where the film sits: fit the height below the menu bar, sit on the bottom edge,
+// and never draw bigger than the frames' real pixels (that is what made them soft).
+let R = { x: 0, y: 0, w: 1, h: 1 };
+function layout() {
+  const dpr = cw / Math.max(1, W);
+  const navEl = document.getElementById('nav');
+  const navPx = ((navEl ? navEl.getBoundingClientRect().height : 80) + 6) * dpr;
+  const native = FRAME_DIR.indexOf('f720') >= 0 ? 720 : 1080;
+  const h = Math.min(ch - navPx, native);
+  const w = h * 16 / 9;
+  R = { x: (cw - w) / 2, y: ch - h, w, h };
+  // the loading placeholder uses the same framing as the film
+  poster.style.backgroundSize = (R.w / dpr).toFixed(1) + 'px ' + (R.h / dpr).toFixed(1) + 'px';
+  poster.style.backgroundPosition = (R.x / dpr).toFixed(1) + 'px ' + (R.y / dpr).toFixed(1) + 'px';
+  poster.style.backgroundRepeat = 'no-repeat';
+}
+// sample the frame's own background: split the top edge into ten slices and take the darkest,
+// so splash or ice touching the top never tints the fill
+const probe = document.createElement('canvas'); probe.width = 10; probe.height = 1;
+const pctx = probe.getContext('2d', { willReadFrequently: true });
+function bgOf(im) {
+  if (im._bg) return im._bg;
+  const w = im.naturalWidth, h = im.naturalHeight;
+  pctx.clearRect(0, 0, 10, 1);
+  pctx.drawImage(im, 0, 0, w, Math.round(h * 0.05), 0, 0, 10, 1);
+  const d = pctx.getImageData(0, 0, 10, 1).data;
+  let best = 0, bl = 1e9;
+  for (let k = 0; k < 10; k++) { const l = d[k * 4] * 0.3 + d[k * 4 + 1] * 0.59 + d[k * 4 + 2] * 0.11; if (l < bl) { bl = l; best = k; } }
+  return (im._bg = [d[best * 4], d[best * 4 + 1], d[best * 4 + 2]]);
 }
 function heroProgress() { return clamp((scrollY - heroTop) / heroRange, 0, 1); }
 function nearest(i) {
@@ -680,10 +711,20 @@ function nearest(i) {
   return -1;
 }
 function drawImg(im, a) {
-  const s = Math.max(cw / im.naturalWidth, ch / im.naturalHeight);
-  const dw = im.naturalWidth * s, dh = im.naturalHeight * s;
+  const iw = im.naturalWidth, ih = im.naturalHeight, bg = bgOf(im);
   ctx.globalAlpha = a;
-  ctx.drawImage(im, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
+  if (R.y > 0) { ctx.fillStyle = 'rgb(' + bg + ')'; ctx.fillRect(0, 0, cw, R.y + 2); }
+  if (R.x > 0) {   // side strips: stretch the frame's plain edge columns outward
+    const sw = Math.max(2, Math.round(iw * 0.003));
+    ctx.drawImage(im, 0, 0, sw, ih, 0, R.y, R.x + 1, R.h);
+    ctx.drawImage(im, iw - sw, 0, sw, ih, R.x + R.w - 1, R.y, cw - R.x - R.w + 1, R.h);
+  }
+  ctx.drawImage(im, R.x, R.y, R.w, R.h);
+  if (R.y > 0) {   // melt the frame's top edge into the background above it
+    const fh = R.h * 0.1, gr = ctx.createLinearGradient(0, R.y, 0, R.y + fh);
+    gr.addColorStop(0, 'rgba(' + bg + ',1)'); gr.addColorStop(1, 'rgba(' + bg + ',0)');
+    ctx.fillStyle = gr; ctx.fillRect(0, R.y - 1, cw, fh + 1);
+  }
 }
 function render(p) {
   const i = Math.round(p * (N - 1));   // one real frame at a time: no blending, so no ghosting
@@ -806,12 +847,13 @@ let heroInit = false;
 function initHeroOnce() {
   if (heroInit) return; heroInit = true;
   FRAME_DIR = cw > 1100 ? 'assets/f1080/' : 'assets/f720/';   // full HD on every laptop and desktop
+  layout();
   const SW = cw > 2600 ? 3840 : cw > 1700 ? 2560 : 1920;
   const sImg = new Image(); sImg.decoding = 'async';
-  sImg.onload = () => (sImg.decode ? sImg.decode().catch(() => {}) : Promise.resolve()).then(() => { stillS = sImg; dirty = true; render(shown); stage.classList.add('ready'); startLoadRamp(); });
+  sImg.onload = () => { stillS = sImg; dirty = true; render(shown); stage.classList.add('ready'); startLoadRamp(); };
   sImg.src = 'assets/hero-start-' + SW + '.webp';
   const eImg = new Image(); eImg.decoding = 'async';
-  eImg.onload = () => (eImg.decode ? eImg.decode().catch(() => {}) : Promise.resolve()).then(() => { stillE = eImg; dirty = true; render(shown); });
+  eImg.onload = () => { stillE = eImg; dirty = true; render(shown); };
   setTimeout(() => { eImg.src = 'assets/hero-end-' + SW + '.webp'; }, 600);
   poster.style.backgroundImage = "url('assets/hero-start-1920.webp')";
   const pi = new Image();
